@@ -1,10 +1,11 @@
 #include <SDL\SDL.h>
 #include <SDL\SDL_image.h>
+#include "Render.h"
+#include "Utilities.h"
 
 int main(int, char*[]) {
 
 	try {
-
 		//INIT
 		if (SDL_Init(SDL_INIT_EVERYTHING) != 0) throw SDL_GetError();
 		const Uint8 imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
@@ -14,7 +15,7 @@ int main(int, char*[]) {
 		SDL_Window * window;
 		const int WIDTH = 1024;
 		const int HEIGTH = 780;
-		window=SDL_CreateWindow("caca", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGTH, SDL_WINDOW_BORDERLESS|SDL_WINDOW_SHOWN);
+		window=SDL_CreateWindow("FROGGER", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGTH, SDL_WINDOW_BORDERLESS|SDL_WINDOW_SHOWN);
 
 		//RENDERER
 		SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
