@@ -1,5 +1,4 @@
 ﻿  GameManager.cpp
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\dynamicobject.h(4): warning C4091: 'typedef ': ignored on left of 'TYPE' when no variable is declared
   SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.exe
   SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.pdb (Full PDB)
   0 archivo(s) copiado(s)

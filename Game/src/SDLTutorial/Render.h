@@ -2,6 +2,7 @@
 #include <SDL\SDL.h>
 #include <SDL\SDL_image.h>
 
+//S'ha de fer be, aixo no xuta!!!!!
 #define R Renderer::Instance()
 
 class Renderer

@@ -7,3 +7,5 @@
 #include <vector>
 #include "DynamicObject.h"
 using namespace std;
+
+//Aqui nomes hi ha les "llibreries" que necessitem.

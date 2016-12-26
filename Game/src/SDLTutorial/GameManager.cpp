@@ -1,29 +1,35 @@
 #include "GameManager.h"
 
 
-
+//Inicialitza els objectes de l'escenari
 void GameManager::SceneInit()
 {
+	// Paret verda
 	SDL_Rect forestCollision = { 0,0,WIDTH,80 };
 	SDL_Rect forestImg = { 0,60,WIDTH,60 };
 	Object forest(forestImg, forestCollision);
 	sceneObject.push_back(forest);
 
+	//Riu
 	SDL_Rect waterCollision = { 0,70,WIDTH,150 };
 	SDL_Rect waterImg = { 0,120,WIDTH,35 };
 	Object water(waterImg, waterCollision);
 	sceneObject.push_back(water);
 }
 
+//Inicialitza tots els objectes dinamics
+//Troncs,cotxes,etc.
 void GameManager::DynamicsInit()
 {
 	//River Objects
+
+	//Array de 3 elemetns, ja que son 3 files
 	riverObjects = new vector<DynamicObject>[3];
 
 	SDL_Rect woodCollision = { 0,70,WIDTH / 3,50 };
 	SDL_Rect woodImg = { 7,165,180,25 };
-	DynamicObject wood(woodImg, woodCollision, false,TYPE::PLATFORM);
-	riverObjects[0].push_back(wood);
+	DynamicObject wood(woodImg, woodCollision, false);
+	riverObjects[2].push_back(wood);
 
 	woodCollision = { WIDTH - woodCollision.w,120,WIDTH / 3,50 };
 	woodImg = { 7,165,180,25 };
@@ -37,14 +43,16 @@ void GameManager::DynamicsInit()
 	wood.SetCollision(woodCollision);
 	wood.SetImgBox(woodImg);
 	wood.SetDirection(false);
-	riverObjects[2].push_back(wood);
+	riverObjects[0].push_back(wood);
 
 	// Road Objects
+
+	//Array de 3 elemetns, ja que son 3 files
 	roadObjects = new vector<DynamicObject>[3];
 
 	SDL_Rect carCollision = { 0,300,75,50 };
 	SDL_Rect carImg = { 40,265,35,25 };
-	DynamicObject car(carImg, carCollision, false, TYPE::ENEMY);
+	DynamicObject car(carImg, carCollision, false);
 	roadObjects[2].push_back(car);
 
 	carCollision = { WIDTH - 75,350,75,50 };
@@ -63,20 +71,25 @@ void GameManager::DynamicsInit()
 
 }
 
+//Detecta la col·lisio entre
+//el personatge i l'objecte dinamic.
 bool GameManager::Collision(DynamicObject & d, Rana & r)
 {	
-	int rYMax = r.GetCollision().y + r.GetCollision().h;
-	int rXMax = r.GetCollision().x + r.GetCollision().w;
 
+	//Despres de ferla 5 vagades, es queda aixi
+	//La colisio es des del punt centric de la r
+
+	//Calculem el punt centric de la r
 	int rXCenter = r.GetCollision().x + r.GetCollision().w / 2;
 	int rYCenter = r.GetCollision().y + r.GetCollision().h / 2;
 
+	//Calculem els 4 punts de la d
 	int dYMax = d.GetCollision().y + d.GetCollision().h;
 	int dXMax = d.GetCollision().x + d.GetCollision().w;
 	int dXMin = d.GetCollision().x;
 	int dYMin = d.GetCollision().y;
 
-
+	//Mirem si hi ha collisio
 	bool collVertical = dYMin<=rYCenter && dYMax>= rYCenter;
 	bool collLateral = dXMin<=rXCenter && dXMax>=rXCenter;
 
@@ -90,6 +103,7 @@ bool GameManager::Collision(DynamicObject & d, Rana & r)
 	}
 }
 
+//Inicialitza tots els valors
 GameManager::GameManager()
 {
 	try {
@@ -136,6 +150,8 @@ GameManager::~GameManager()
 	delete[]roadObjects;
 }
 
+//Es el gameloop
+//Tambe mou el personatge
 void GameManager::GameLoop()
 {
 	try {
@@ -205,23 +221,33 @@ void GameManager::GameLoop()
 	SDL_Quit();
 }
 
+//Actualitza tots els elements del joc
+//Menys quant es mou el personatge
 void GameManager::Update()
 {
+	//Per cada element de la llista
 	for (int i = 0; i<3; i++)
 	{
+		//Recorrem tots el objectes del riu
 		for (DynamicObject &obj : riverObjects[i])
 		{
+			//Els actualitzem
 			obj.Update();
+
+			//Comprovem si hi ha colisio o no
 			if (Collision(obj, player))
 			{
+				//En cas afirmatiu
+				//diguem que esta sobre una plataforma
 				playerInPlatform = true;
-				if (!obj.GetDirection())
+
+				//Si va de dreta a esquerra
+				if (!obj.GetDirection() && (player.GetCollision().x + player.GetCollision().w < 800))
 				{
-					if (player.GetCollision().x + player.GetCollision().w < 800)
-					{
-						player.SetX(player.GetCollision().x + obj.GetVelociti());
-					}
+					player.SetX(player.GetCollision().x + obj.GetVelociti());
 				}
+
+				//Si va d'esquerra a dreta
 				else
 				{
 					if (player.GetCollision().x > 0)
@@ -230,15 +256,19 @@ void GameManager::Update()
 					}
 				}
 			}
-			else
-			{
-			}
 		}
+
+		//Recorrem tots els objectes de la carretera
 		for (DynamicObject &obj : roadObjects[i])
 		{
+			//Els actualitzem
 			obj.Update();
-			if (Collision(obj, player) && obj.GetType() == TYPE::ENEMY)
+
+			//Detectem si colisionen
+			if (Collision(obj, player))
 			{
+				//Si colisionen, li restem vida
+				//i el coloquem el punt de partida
 				player.RestaVida();
 				SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
 				player.SetCollision(temp);
@@ -246,35 +276,59 @@ void GameManager::Update()
 			}
 		}
 	}
+
+	//Si el jugador és dintre de l'aigua
+	//i no esta sobre una plataforma
 	if (player.GetCollision().y > 30 && player.GetCollision().y < 200 && !playerInPlatform)
 	{
+		//Si colisionen, li restem vida
+		//i el coloquem el punt de partida
 		player.RestaVida();
 		SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
 		player.SetCollision(temp);
 		cout << player.GetVidas() << endl;
 	}
+
+	//li donem el valor a false amb la finalitat de que si
+	//cau de la plataforma es mori.
 	playerInPlatform = false;
 }
 
+//Pinta els objectes
 void GameManager::Draw()
 {
+
+	//Netegem el que es mostra per pantalla
+	SDL_RenderClear(renderer);
+
+	//Per cada element de l'escena
 	for (auto obj : sceneObject)
 	{
+		//Pintem
 		SDL_RenderCopy(renderer, globalTexture, &obj.GetImgBox(), &obj.GetCollision());
 	}
+
+	//Recorrem les llistes
 	for (int i=0; i<3;i++)
 	{
+		//Per cada element del riu
 		for (DynamicObject obj : riverObjects[i])
 		{
+			//El coloquem al renderer
 			SDL_RenderCopy(renderer, globalTexture, &obj.GetImgBox(), &obj.GetCollision());
 		}
+
+		//Per cada element de la carretera
 		for (DynamicObject obj : roadObjects[i])
 		{
+			//El coloquem al renderer
 			SDL_RenderCopy(renderer, globalTexture, &obj.GetImgBox(), &obj.GetCollision());
 		}
 	}
 
+	//Coloquem la textura del personatge
 	SDL_RenderCopy(renderer, globalTexture, &player.GetImgBox(), &player.GetCollision());
+
+	//Pintem tots elements del renderer
 	SDL_RenderPresent(renderer);
-	SDL_RenderClear(renderer);
 }
