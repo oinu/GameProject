@@ -4,40 +4,82 @@
 
 Rana::Rana()
 {
-	x = 0;
-	y = 0;
+	img = { 0,0,0,0 };
+	collision = { 0,0,0,0 };
 	vidas = 1;
 	puntuacion = 0;
 }
 
-Rana::Rana(int aX, int aY, Rect &r, int v)
+Rana::Rana( SDL_Rect &r, SDL_Rect &r2, int v)
 {
-	x = aX;
-	y = aY;
 	img = r;
+	collision = r2;
 	vidas = v;
 	puntuacion = 0;
 }
 
 Rana::Rana(int aX, int aY, int xImg, int yImg, int width, int heigth, int v)
 {
-	x = aX;
-	y = aY;
-	img.SetX(xImg);
-	img.SetY(yImg);
-	img.SetWidth(width);
-	img.SetHeight(heigth);
+	collision.x = aX;
+	collision.y = aY;
+	img.x=xImg;
+	img.y=yImg;
+	img.w=width;
+	img.h=heigth;
 	vidas = v;
 	puntuacion = 0;
 }
 
-Rana::Rana(Rana &r)
-{
-	x = r.x;
-	y = r.y;
-	img = r.img;
-}
-
 Rana::~Rana()
 {
+}
+
+int Rana::GetVidas()
+{
+	return vidas;
+}
+
+int Rana::GetPuntuacion()
+{
+	return puntuacion;
+}
+
+void Rana::SetVidas(int value)
+{
+	vidas = value;
+}
+
+void Rana::SetPuntuacion(int value)
+{
+	puntuacion = value;
+}
+
+void Rana::MoveUp()
+{
+	if(collision.y>0)collision.y -= collision.h;
+}
+
+void Rana::MoveDown(int height)
+{
+	if(collision.y<height-collision.h)collision.y += collision.h;
+}
+
+void Rana::MoveRight(int width)
+{
+	if(collision.x<width-collision.w)collision.x += collision.w;
+}
+
+void Rana::MoveLeft()
+{
+	if(collision.x>0)collision.x -= collision.w;
+}
+
+void Rana::RestaVida()
+{
+	vidas --;
+}
+
+void Rana::SumaPuntuacion(int value)
+{
+	puntuacion += value;
 }

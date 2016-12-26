@@ -4,32 +4,21 @@
 
 Object::Object()
 {
-	x = 0;
-	y = 0;
+	img = { 0,0,0,0 };
+	collision = { 0,0,0,0 };
 }
 
 Object::Object(int aX, int aY, int xImage, int yImage, int aWidth, int aHeight)
 {
-	x = aX;
-	y = aY;
-	img.SetX(xImage);
-	img.SetY(yImage);
-	img.SetWidth(aWidth);
-	img.SetHeight(aHeight);
+	collision.x = aX;
+	collision.y = aY;
+	img = { xImage,yImage,aWidth,aHeight };
 }
 
-Object::Object(int aX, int aY, Rect & aImg)
+Object::Object( SDL_Rect & aImg, SDL_Rect &aCollision)
 {
-	x = aX;
-	y = aY;
 	img = aImg;
-}
-
-Object::Object(Object &obj)
-{
-	x = obj.x;
-	y = obj.y;
-	img = obj.img;
+	collision = aCollision;
 }
 
 Object::~Object()
@@ -38,22 +27,42 @@ Object::~Object()
 
 int Object::GetX()
 {
-	return x;
+	return collision.x;
 }
 
 int Object::GetY()
 {
-	return y;
+	return collision.y;
+}
+
+SDL_Rect & Object::GetImgBox()
+{
+	return img;
+}
+
+SDL_Rect & Object::GetCollision()
+{
+	return collision;
 }
 
 void Object::SetX(int value)
 {
-	x = value;
+	collision.x = value;
 }
 
 void Object::SetY(int value)
 {
-	y = value;
+	collision.y = value;
+}
+
+void Object::SetImgBox(SDL_Rect &value)
+{
+	img = value;
+}
+
+void Object::SetCollision(SDL_Rect &value)
+{
+	collision = value;
 }
 
 void Object::Update()
@@ -62,9 +71,4 @@ void Object::Update()
 
 void Object::Draw()
 {
-}
-
-Rect Object::BoxCollision()
-{
-	return img;
 }

@@ -1,23 +1,5 @@
-﻿  Main.cpp
-c:\users\esalles\documents\visual studio 2015\projects\minicandycrush\src\sdltutorial\main.cpp(52): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-c:\users\esalles\documents\visual studio 2015\projects\minicandycrush\src\sdltutorial\main.cpp(53): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-  SDLTutorial.vcxproj -> C:\Users\esalles\Desktop\GameProject\Game\\bin\Win32Debug\SDLTutorial.exe
-  SDLTutorial.vcxproj -> C:\Users\esalles\Desktop\GameProject\Game\\bin\Win32Debug\SDLTutorial.pdb (Full PDB)
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\libFLAC-8.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\libfreetype-6.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\libjpeg-9.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\libmodplug-1.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\libogg-0.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\libpng16-16.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\libtiff-5.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\libvorbis-0.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\libvorbisfile-3.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\libwebp-4.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\SDL2.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\SDL2_image.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\SDL2_mixer.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\SDL2_net.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\SDL2_ttf.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\smpeg2.dll
-  C:\Users\esalles\Desktop\GameProject\Game\\dep\dll\x86\zlib1.dll
-  17 File(s) copied
+﻿  GameManager.cpp
+d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\dynamicobject.h(4): warning C4091: 'typedef ': ignored on left of 'TYPE' when no variable is declared
+  SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.exe
+  SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.pdb (Full PDB)
+  0 archivo(s) copiado(s)

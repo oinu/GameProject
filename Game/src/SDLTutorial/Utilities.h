@@ -1,6 +1,9 @@
 #pragma once
-#include "Rect.h"
-bool Collision(Rect &r1, Rect &r2)
-{
-
-}
+#include "Rana.h"
+#include <iostream>
+#include <SDL\SDL.h>
+#include <SDL\SDL_image.h>
+#include "Render.h"
+#include <vector>
+#include "DynamicObject.h"
+using namespace std;
