@@ -135,6 +135,12 @@ GameManager::GameManager()
 
 		//Dynamic Objects
 		DynamicsInit();
+
+		firstOccupied = false;
+		secondOccupied = false;
+		thirdOccupied = false;
+		fourthOccupied = false;
+		fifthOccupied = false;
 	}
 	catch (const char *msg) {
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s", msg);
@@ -177,7 +183,65 @@ void GameManager::GameLoop()
 
 					//Arrows
 					case SDLK_UP:
-						player.MoveUp();
+						
+						//Si esta a l'ultim tronc
+						if (player.GetCollision().y == 50)
+						{
+							//Comprova si les caselles estan disponibles
+							if (!firstOccupied && player.GetCollision().x >= 20 && player.GetCollision().x <= 55)
+							{
+								//Si esta disponible mou el jugador
+								//Activa la imatge dins la casella
+								//El Coloca al inici
+								player.MoveUp();
+								firstOccupied = true;
+								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
+								player.SetCollision(temp);
+							}
+							else if (!secondOccupied && player.GetCollision().x >= 173 && player.GetCollision().x <= 225)
+							{
+								//Si esta disponible mou el jugador
+								//Activa la imatge dins la casella
+								//El Coloca al inici
+								player.MoveUp();
+								secondOccupied = true;
+								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
+								player.SetCollision(temp);
+							}
+							else if (!thirdOccupied && player.GetCollision().x >= 350 && player.GetCollision().x <= 400)
+							{
+								//Si esta disponible mou el jugador
+								//Activa la imatge dins la casella
+								//El Coloca al inici
+								player.MoveUp();
+								thirdOccupied = true;
+								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
+								player.SetCollision(temp);
+							}
+							else if (!fourthOccupied && player.GetCollision().x >= 520 && player.GetCollision().x <= 565)
+							{
+								//Si esta disponible mou el jugador
+								//Activa la imatge dins la casella
+								//El Coloca al inici
+								player.MoveUp();
+								fourthOccupied = true;
+								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
+								player.SetCollision(temp);
+							}
+							else if (!fifthOccupied && player.GetCollision().x >= 700 && player.GetCollision().x <= 735)
+							{
+								//Si esta disponible mou el jugador
+								//Activa la imatge dins la casella
+								//El Coloca al inici
+								player.MoveUp();
+								fifthOccupied = true;
+								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
+								player.SetCollision(temp);
+							}
+							
+						}
+						//Si no es a l'ultim tronc, abansa normal
+						else player.MoveUp();
 						break;
 					case SDLK_DOWN:
 						player.MoveDown(HEIGTH);
@@ -191,7 +255,64 @@ void GameManager::GameLoop()
 
 					// WSAD
 					case SDLK_w:
-						player.MoveUp();
+						//Si esta a l'ultim tronc
+						if (player.GetCollision().y == 50)
+						{
+							//Comprova si les caselles estan disponibles
+							if (!firstOccupied && player.GetCollision().x >= 20 && player.GetCollision().x <= 55)
+							{
+								//Si esta disponible mou el jugador
+								//Activa la imatge dins la casella
+								//El Coloca al inici
+								player.MoveUp();
+								firstOccupied = true;
+								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
+								player.SetCollision(temp);
+							}
+							else if (!secondOccupied && player.GetCollision().x >= 173 && player.GetCollision().x <= 225)
+							{
+								//Si esta disponible mou el jugador
+								//Activa la imatge dins la casella
+								//El Coloca al inici
+								player.MoveUp();
+								secondOccupied = true;
+								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
+								player.SetCollision(temp);
+							}
+							else if (!thirdOccupied && player.GetCollision().x >= 350 && player.GetCollision().x <= 400)
+							{
+								//Si esta disponible mou el jugador
+								//Activa la imatge dins la casella
+								//El Coloca al inici
+								player.MoveUp();
+								thirdOccupied = true;
+								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
+								player.SetCollision(temp);
+							}
+							else if (!fourthOccupied && player.GetCollision().x >= 520 && player.GetCollision().x <= 565)
+							{
+								//Si esta disponible mou el jugador
+								//Activa la imatge dins la casella
+								//El Coloca al inici
+								player.MoveUp();
+								fourthOccupied = true;
+								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
+								player.SetCollision(temp);
+							}
+							else if (!fifthOccupied && player.GetCollision().x >= 700 && player.GetCollision().x <= 735)
+							{
+								//Si esta disponible mou el jugador
+								//Activa la imatge dins la casella
+								//El Coloca al inici
+								player.MoveUp();
+								fifthOccupied = true;
+								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
+								player.SetCollision(temp);
+							}
+
+						}
+						//Si no es a l'ultim tronc, abansa normal
+						else player.MoveUp();
 						break;
 					case SDLK_s:
 						player.MoveDown(HEIGTH);
@@ -328,6 +449,12 @@ void GameManager::Draw()
 
 	//Coloquem la textura del personatge
 	SDL_RenderCopy(renderer, globalTexture, &player.GetImgBox(), &player.GetCollision());
+
+	if(firstOccupied)SDL_RenderCopy(renderer, globalTexture, &player.GetImgBox(), new SDL_Rect{ 30,0,player.GetCollision().w,player.GetCollision().h });
+	if(secondOccupied)SDL_RenderCopy(renderer, globalTexture, &player.GetImgBox(), new SDL_Rect{ 200,0,player.GetCollision().w,player.GetCollision().h });
+	if(thirdOccupied)SDL_RenderCopy(renderer, globalTexture, &player.GetImgBox(), new SDL_Rect{ 370,0,player.GetCollision().w,player.GetCollision().h });
+	if(fourthOccupied)SDL_RenderCopy(renderer, globalTexture, &player.GetImgBox(), new SDL_Rect{ 540,0,player.GetCollision().w,player.GetCollision().h });
+	if(fifthOccupied)SDL_RenderCopy(renderer, globalTexture, &player.GetImgBox(), new SDL_Rect{ 710,0,player.GetCollision().w,player.GetCollision().h });
 
 	//Pintem tots elements del renderer
 	SDL_RenderPresent(renderer);

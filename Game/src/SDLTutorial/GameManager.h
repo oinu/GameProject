@@ -34,6 +34,13 @@ private:
 	//Tronc, etc
 	bool playerInPlatform;
 
+	//Determina si les caselles finals estan ocupades
+	bool firstOccupied;
+	bool secondOccupied;
+	bool thirdOccupied;
+	bool fourthOccupied;
+	bool fifthOccupied;
+
 	//FUNCIONS PRIVADES
 
 	//Inicialitza els objectes de l'escenari
