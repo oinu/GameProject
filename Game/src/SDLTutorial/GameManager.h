@@ -4,9 +4,14 @@
 #define WIDTH 800 
 #define HEIGTH 600
 
+typedef enum GameState { MENU, GAME,QUIT };
+
 class GameManager
 {
 private:
+
+	//Determina en quin moment del joc ens trobem
+	GameState gameState;
 	//Punter que conter la informacio de la finestra
 	SDL_Window *window;
 
@@ -63,6 +68,12 @@ public:
 	~GameManager();
 	
 	//FUNCIONS
+
+	//Menu Principal
+	void MainMenu();
+
+	//Jugar
+	void Game();
 
 	//Es el gameloop
 	//Tambe mou el personatge

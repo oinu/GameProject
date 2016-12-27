@@ -141,6 +141,9 @@ GameManager::GameManager()
 		thirdOccupied = false;
 		fourthOccupied = false;
 		fifthOccupied = false;
+
+		//Game State
+		gameState = GameState::MENU;
 	}
 	catch (const char *msg) {
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s", msg);
@@ -156,9 +159,34 @@ GameManager::~GameManager()
 	delete[]roadObjects;
 }
 
-//Es el gameloop
-//Tambe mou el personatge
-void GameManager::GameLoop()
+void GameManager::MainMenu()
+{
+	SDL_Event evnt;
+	for (bool isRunning = true; isRunning;)
+	{
+		//INPUT HANDLER
+		while (SDL_PollEvent(&evnt))
+		{
+			switch (evnt.type)
+			{
+			case SDL_QUIT:
+				isRunning = false;
+				gameState = GameState::QUIT;
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				gameState = GameState::GAME;
+				isRunning = false;
+				break;
+			}
+
+		}
+		SDL_RenderCopy(renderer, globalTexture, new SDL_Rect{ 0,0,800,50 }, new SDL_Rect{0,0,WIDTH,100});
+		
+		SDL_RenderPresent(renderer);
+	}
+}
+
+void GameManager::Game()
 {
 	try {
 		SDL_Event evnt;
@@ -171,6 +199,7 @@ void GameManager::GameLoop()
 				{
 				case SDL_QUIT:
 					isRunning = false;
+					gameState = GameState::QUIT;
 					break;
 				case SDL_KEYDOWN:
 					SDL_Keycode key = evnt.key.keysym.sym;
@@ -181,9 +210,9 @@ void GameManager::GameLoop()
 						isRunning = false;
 						break;
 
-					//Arrows
+						//Arrows
 					case SDLK_UP:
-						
+
 						//Si esta a l'ultim tronc
 						if (player.GetCollision().y == 50)
 						{
@@ -238,7 +267,7 @@ void GameManager::GameLoop()
 								SDL_Rect temp = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
 								player.SetCollision(temp);
 							}
-							
+
 						}
 						//Si no es a l'ultim tronc, abansa normal
 						else player.MoveUp();
@@ -253,7 +282,7 @@ void GameManager::GameLoop()
 						player.MoveRight(WIDTH);
 						break;
 
-					// WSAD
+						// WSAD
 					case SDLK_w:
 						//Si esta a l'ultim tronc
 						if (player.GetCollision().y == 50)
@@ -340,6 +369,17 @@ void GameManager::GameLoop()
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s", msg);
 	}
 	SDL_Quit();
+}
+
+//Es el gameloop
+//Tambe mou el personatge
+void GameManager::GameLoop()
+{
+	while (gameState!=GameState::QUIT)
+	{
+		if (gameState == GameState::GAME)Game();
+		else if (gameState == GameState::MENU)MainMenu();
+	}
 }
 
 //Actualitza tots els elements del joc
