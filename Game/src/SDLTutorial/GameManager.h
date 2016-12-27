@@ -4,7 +4,7 @@
 #define WIDTH 800 
 #define HEIGTH 600
 
-typedef enum GameState { MENU, GAME,QUIT };
+typedef enum GameState { MENU, GAME,QUIT, RANKING};
 
 class GameManager
 {
@@ -23,6 +23,9 @@ private:
 
 	//La textura on es troba totes les imatges
 	SDL_Texture* globalTexture;
+
+	//Textura on es troba les opcions del menu
+	SDL_Texture* menuTexture;
 
 	//L'escenari
 	vector<Object> sceneObject;
