@@ -184,6 +184,11 @@ GameManager::GameManager()
 
 		//Game State
 		gameState = GameState::MENU;
+
+		//Recuperar el ranking
+		ranking = new Ranking(fileManager);
+		//pair <int, string> c = ranking->GetRankingByIndex(1);
+		//cout << c.first << endl;
 	}
 	catch (const char *msg) {
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s", msg);

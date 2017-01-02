@@ -6,6 +6,7 @@
 #include "Render.h"
 #include <vector>
 #include "DynamicObject.h"
+#include "Ranking.h"
 using namespace std;
 
 //Aqui nomes hi ha les "llibreries" que necessitem.

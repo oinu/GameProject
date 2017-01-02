@@ -49,5 +49,11 @@
     <ClInclude Include="DynamicObject.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="FileManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Ranking.h">
+      <Filter>Game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

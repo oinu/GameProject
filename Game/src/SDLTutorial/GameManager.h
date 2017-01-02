@@ -62,6 +62,10 @@ private:
 	//el personatge i l'objecte dinamic.
 	bool Collision(DynamicObject &d, Rana &r);
 
+	FileManager fileManager;
+
+	Ranking *ranking;
+
 public:
 
 	//CONSTRUCTORS

@@ -154,7 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DynamicObject.h" />
+    <ClInclude Include="FileManager.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Ranking.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Rana.h" />
