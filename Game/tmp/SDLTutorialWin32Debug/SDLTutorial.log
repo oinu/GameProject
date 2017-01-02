@@ -1,7 +1,10 @@
-﻿  Main.cpp
+﻿  Rana.cpp
+  Object.cpp
+  Main.cpp
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\gamemanager.h(7): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
   GameManager.cpp
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\gamemanager.h(7): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
+  DynamicObject.cpp
   Generating Code...
   SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.exe
   SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.pdb (Full PDB)

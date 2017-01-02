@@ -26,9 +26,15 @@ void GameManager::DynamicsInit()
 	//Array de 3 elemetns, ja que son 3 files
 	riverObjects = new vector<DynamicObject>[3];
 
-	SDL_Rect woodCollision = { 0,70,WIDTH / 3,50 };
+	SDL_Rect woodCollision;
 	SDL_Rect woodImg = { 7,165,180,25 };
 	DynamicObject wood(woodImg, woodCollision, false);
+	int finalX = WIDTH - WIDTH / 3;
+
+	/*woodCollision = { 0,70,WIDTH / 3,50 };
+	wood.SetCollision(woodCollision);
+	wood.SetImgBox(woodImg);
+	wood.SetDirection(false);
 	riverObjects[2].push_back(wood);
 
 	woodCollision = { WIDTH - woodCollision.w,120,WIDTH / 3,50 };
@@ -43,31 +49,64 @@ void GameManager::DynamicsInit()
 	wood.SetCollision(woodCollision);
 	wood.SetImgBox(woodImg);
 	wood.SetDirection(false);
-	riverObjects[0].push_back(wood);
+	riverObjects[0].push_back(wood);*/
+
+	for (int i=0; i < 3; i++)
+	{
+		woodCollision = { 0 -(woodCollision.w*i +100*i),70,WIDTH / 3,50 };
+		wood.SetCollision(woodCollision);
+		wood.SetImgBox(woodImg);
+		wood.SetDirection(false);
+		riverObjects[2].push_back(wood);
+
+		woodCollision = { finalX + (woodCollision.w*i +100*i),120,WIDTH / 3,50 };
+		woodImg = { 7,165,180,25 };
+		wood.SetCollision(woodCollision);
+		wood.SetImgBox(woodImg);
+		wood.SetDirection(true);
+		riverObjects[1].push_back(wood);
+
+		woodCollision = { 0 - (woodCollision.w*i + 100 * i),170,WIDTH / 3,50 };
+		woodImg = { 7,165,180,25 };
+		wood.SetCollision(woodCollision);
+		wood.SetImgBox(woodImg);
+		wood.SetDirection(false);
+		riverObjects[0].push_back(wood);
+	}
 
 	// Road Objects
 
 	//Array de 3 elemetns, ja que son 3 files
 	roadObjects = new vector<DynamicObject>[3];
-
+	finalX = WIDTH - 75;
+	
 	SDL_Rect carCollision = { 0,300,75,50 };
 	SDL_Rect carImg = { 40,265,35,25 };
 	DynamicObject car(carImg, carCollision, false);
-	roadObjects[2].push_back(car);
 
-	carCollision = { WIDTH - 75,350,75,50 };
-	carImg = { 80,265,35,25 };
-	car.SetCollision(carCollision);
-	car.SetImgBox(carImg);
-	car.SetDirection(true);
-	roadObjects[1].push_back(car);
+	for (int i = 0; i < 3; i++)
+	{
+		carCollision = { 0-(carCollision.w*i + 100 * i),300,75,50 };
+		carImg = { 40,265,35,25 };
+		car.SetCollision(carCollision);
+		car.SetImgBox(carImg);
+		car.SetDirection(false);
+		roadObjects[2].push_back(car);
 
-	carCollision = { 0,400,75,50 };
-	carImg = { 40,265,35,25 };
-	car.SetCollision(carCollision);
-	car.SetImgBox(carImg);
-	car.SetDirection(false);
-	roadObjects[0].push_back(car);
+		carCollision = { finalX + (carCollision.w*i + 100 * i),350,75,50 };
+		carImg = { 80,265,35,25 };
+		car.SetCollision(carCollision);
+		car.SetImgBox(carImg);
+		car.SetDirection(true);
+		roadObjects[1].push_back(car);
+
+		carCollision = { 0 - (carCollision.w*i + 100 * i),400,75,50 };
+		carImg = { 40,265,35,25 };
+		car.SetCollision(carCollision);
+		car.SetImgBox(carImg);
+		car.SetDirection(false);
+		roadObjects[0].push_back(car);
+	}
 
 }
 
@@ -235,6 +274,7 @@ void GameManager::Game()
 					{
 					case SDLK_ESCAPE:
 						isRunning = false;
+						gameState = GameState::QUIT;
 						break;
 
 						//Arrows
