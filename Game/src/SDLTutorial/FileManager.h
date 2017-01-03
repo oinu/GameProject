@@ -6,8 +6,21 @@ using namespace std;
 
 struct Score
 {
+public:
 	int punts;
-	char* nom;
+	char nom[10];
+	Score()
+	{
+
+	};
+	Score(int p, char* c)
+	{
+		punts = p;
+		for (int i = 0; i < 10; i++)
+		{
+			nom[i] = c[i];
+		}
+	}
 };
 class FileManager
 {
@@ -27,21 +40,42 @@ public:
 	}
 
 	//Escriu en el document
-	void WriteRankingAtFile(Score ranking)
+	void WriteRankingAtFile(Score* ranking)
 	{
-		ofstream file("../../res/files/ranking.dat");
-		file.write(reinterpret_cast<char*>(&ranking), sizeof(ranking));
+		Score*r = ranking;
+		ofstream file("../../res/files/ranking.dat", ios::out |ios::binary);
+		for (int i = 0; i < 10; i++)
+		{
+			file.write(reinterpret_cast<char*>(&r[i].punts), sizeof(r[i].punts));
+			file.write(reinterpret_cast<char*>(&r[i].nom), sizeof(r[i].nom));
+		}
 		file.close();
 	}
 
 	//Llegeix el document del ranking i 
 	//Retorna un punter al ranking
-	Score& ReadRankingAtFile()
+	Score* ReadRankingAtFile()
 	{
 		//Prova d'obrir el document
-		Score r;
-		ifstream file("../../res/files/ranking.dat");
-		file.read(reinterpret_cast<char*>(&r), sizeof(r));
-		return r;
+		Score *ran = new Score[10];
+		ifstream file("../../res/files/ranking.dat", ios::out | ios::binary);
+		if (file.is_open())
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				file.read(reinterpret_cast<char*>(&ran[i].punts), sizeof(ran[i].punts));
+				file.read(reinterpret_cast<char*>(&ran[i].nom), sizeof(ran[i].nom));
+			}
+		}
+		else
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				ran[i] = { 0,"NONE" };
+			}
+			WriteRankingAtFile(ran);
+		}
+		file.close();
+		return ran;
 	}
 };
