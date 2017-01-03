@@ -33,8 +33,5 @@ public:
 
 	//Actualitza la posicio de l'objecte
 	void Update();
-
-	//Pinta l'objecte
-	void Draw();
 };
 

@@ -83,8 +83,3 @@ void DynamicObject::Update()
 		}
 	}
 }
-
-//Pina l'objecte
-void DynamicObject::Draw()
-{
-}

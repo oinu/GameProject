@@ -49,6 +49,6 @@ public:
 	void Update();
 
 	//Pinta els objectes
-	void Draw();
+	void Draw(SDL_Renderer*, SDL_Texture*);
 };
 

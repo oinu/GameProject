@@ -7,6 +7,9 @@
 #include <vector>
 #include "DynamicObject.h"
 #include "Ranking.h"
+#include "Scene.h"
+#include "MenuScene.h"
+#include "GameScene.h"
 using namespace std;
 
 //Aqui nomes hi ha les "llibreries" que necessitem.

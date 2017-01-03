@@ -79,6 +79,7 @@ void Object::Update()
 }
 
 //Pinta els objectes
-void Object::Draw()
+void Object::Draw(SDL_Renderer* r, SDL_Texture* t)
 {
+	SDL_RenderCopy(r, t, &img, &collision);
 }

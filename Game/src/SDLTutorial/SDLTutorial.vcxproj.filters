@@ -12,6 +12,9 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="SceneObjects">
+      <UniqueIdentifier>{fc505f51-26bb-49bd-8fb0-04f51fcab023}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -28,6 +31,15 @@
     </ClCompile>
     <ClCompile Include="DynamicObject.cpp">
       <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>SceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScene.cpp">
+      <Filter>SceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>SceneObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +63,15 @@
     </ClInclude>
     <ClInclude Include="FileManager.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>SceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>SceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>SceneObjects</Filter>
     </ClInclude>
     <ClInclude Include="Ranking.h">
       <Filter>Game</Filter>
