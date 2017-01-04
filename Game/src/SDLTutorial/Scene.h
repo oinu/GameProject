@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL\SDL.h>
 #include <SDL\SDL_image.h>
-typedef enum GameState { MENU, GAME, QUIT, RANKING,GAMEOVER };
+typedef enum GameState { MENU, GAME, QUIT, RANKING,GAMEOVER,DIFFICULTY };
 typedef enum Difficulty { EASE, MEDIUM, HARD};
 class Scene
 {
