@@ -22,20 +22,19 @@ GameManager::GameManager()
 		if (globalTexture == nullptr)throw IMG_GetError();
 
 		//Player
-		SDL_Rect froggCollision = { WIDTH / 2 - 50,HEIGTH - 50,50,50 };
 		SDL_Rect froggImg = { 10,360,25,25 };
 		player.SetImgBox(froggImg);
-		player.SetCollision(froggCollision);
-		player.SetVidas(10);
+		player.PosInicial();
 
 		//Game State
 		gameState = GameState::MENU;
+		difficult = Difficulty::EASE;
 
 		//Recuperar el ranking
 		ranking = new Ranking(fileManager);
 
-		menu = new MenuScene(renderer, globalTexture,&gameState);
-		game = new GameScene(renderer, globalTexture, &gameState, 1, &player);
+		menu = new MenuScene(renderer, globalTexture,&gameState,&difficult);
+		game = new GameScene(renderer, globalTexture, &gameState, &player, &difficult);
 	}
 	catch (const char *msg) {
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s", msg);
@@ -56,6 +55,7 @@ void GameManager::MainMenu()
 
 void GameManager::Game()
 {
+	game->Start();
 	game->Loop();
 }
 
@@ -68,4 +68,5 @@ void GameManager::GameLoop()
 		if (gameState == GameState::GAME)Game();
 		else if (gameState == GameState::MENU)MainMenu();
 	}
+	SDL_Quit();
 }

@@ -9,6 +9,7 @@ class GameManager
 private:
 	MenuScene *menu;
 	GameScene *game;
+	Difficulty difficult;
 	//Determina en quin moment del joc ens trobem
 	GameState gameState;
 	//Punter que conter la informacio de la finestra
