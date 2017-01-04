@@ -10,6 +10,7 @@
 #include "Scene.h"
 #include "MenuScene.h"
 #include "GameScene.h"
+#include "DifficultyScene.h"
 using namespace std;
 
 //Aqui nomes hi ha les "llibreries" que necessitem.
