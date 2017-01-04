@@ -7,6 +7,7 @@ class DynamicObject :
 private:
 	//Indica el centit true= esquerra a dreta
 	bool reves;
+	int distance;
 
 	//Indica la velocitat de moviment dels objectes
 	int v;
@@ -25,13 +26,19 @@ public:
 	//Retorna la velocitat
 	int GetVelociti();
 
+	int GetDistance();
+
+	void SetDistance(int);
+
 	//Dona valor a la direccio
 	void SetDirection(bool);
 
 	//Dona valor a la velocitat
-	void SetVelociti(int);
+	void SetVelocity(int);
 
 	//Actualitza la posicio de l'objecte
-	void Update();
+	void Update(DynamicObject*);
+
+	void UpdateVelocity(int);
 };
 

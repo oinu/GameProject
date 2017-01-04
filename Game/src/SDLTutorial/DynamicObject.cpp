@@ -37,6 +37,16 @@ int DynamicObject::GetVelociti()
 	return v;
 }
 
+int DynamicObject::GetDistance()
+{
+	return distance;
+}
+
+void DynamicObject::SetDistance(int value)
+{
+	distance = value;
+}
+
 //Dona valor a la direccio
 void DynamicObject::SetDirection(bool v)
 {
@@ -44,14 +54,14 @@ void DynamicObject::SetDirection(bool v)
 }
 
 //Dona valor a la velocitat
-void DynamicObject::SetVelociti(int num)
+void DynamicObject::SetVelocity(int num)
 {
 	if (num == 0)v = 1;
 	else v = num;
 }
 
 //Actualitza la posicio de l'objecte
-void DynamicObject::Update()
+void DynamicObject::Update(DynamicObject* obj)
 {
 	//Si va d'esquerrra a dreta
 	if (reves)
@@ -64,7 +74,12 @@ void DynamicObject::Update()
 		//fora de la pantalla
 		else
 		{
-			collision.x += 800 + collision.w;
+			int ultim = obj->collision.x + collision.w;
+
+			if(ultim<800)collision.x = 800 + collision.w+distance;
+			else collision.x = (ultim + distance);
+
+			obj = this;
 		}
 	}
 	//Si va de dreta a esquerra
@@ -74,7 +89,10 @@ void DynamicObject::Update()
 		//fora de la pantalla
 		if(collision.x>=800)
 		{
-			collision.x -=800+collision.w;
+			int ultim = obj->collision.x;
+			if(ultim>0)collision.x =0-collision.w-distance;
+			else collision.x = ultim - distance - collision.w;
+			obj = this;
 		}
 		//Si no ha sortit de la pantalla, el movem
 		else
@@ -82,4 +100,9 @@ void DynamicObject::Update()
 			collision.x += v;
 		}
 	}
+}
+
+void DynamicObject::UpdateVelocity(int score)
+{
+	v += score / 1000;
 }
