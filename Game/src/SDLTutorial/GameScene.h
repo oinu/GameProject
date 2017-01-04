@@ -11,12 +11,26 @@ class GameScene :
 	public Scene
 {
 	int level;
+
 	Rana *player;
+	int oldPuntuation;
+	bool incrementVelocity;
+
 	Object insect;
 	bool insectTake;
+
+	int initalTime;
+	int currentTime;
+
 	vector<Object> sceneObject;
-	vector<DynamicObject> *riverObjects;
-	vector<DynamicObject> *roadObjects;
+
+	vector<DynamicObject> *riverLinesObjects;
+	DynamicObject **lastRiverObject;
+	int riverElementsForLine;
+
+	vector<DynamicObject> *roadLinesObjects;
+	DynamicObject **lastRoadObject;
+	int roadElementsForLine;
 
 	bool playerInPlatform;
 

@@ -1,5 +1,5 @@
 #include "GameScene.h"
-
+using namespace std;
 
 
 
@@ -81,7 +81,7 @@ void GameScene::Draw()
 	for (int i = 0; i<3; i++)
 	{
 		//Per cada element del riu
-		for (DynamicObject obj : riverObjects[i])
+		for (DynamicObject obj : riverLinesObjects[i])
 		{
 			//El coloquem al renderer
 			//SDL_RenderCopy(renderer, globalTexture, &obj.GetImgBox(), &obj.GetCollision());
@@ -92,7 +92,7 @@ void GameScene::Draw()
 	for (int i = 0; i < 5; i++)
 	{
 		//Per cada element de la carretera
-		for (DynamicObject obj : roadObjects[i])
+		for (DynamicObject obj : roadLinesObjects[i])
 		{
 			//El coloquem al renderer
 			//SDL_RenderCopy(renderer, globalTexture, &obj.GetImgBox(), &obj.GetCollision());
@@ -117,14 +117,22 @@ void GameScene::Draw()
 
 void GameScene::Update()
 {
+	
+	if (player->GetPuntuacion() - oldPuntuation >= 1000)
+	{
+		incrementVelocity = true;
+		oldPuntuation = player->GetPuntuacion();
+	}
+
 	//Per cada element de la llista
 	for (int i = 0; i<3; i++)
 	{
 		//Recorrem tots el objectes del riu
-		for (DynamicObject &obj : riverObjects[i])
+		for (DynamicObject &obj : riverLinesObjects[i])
 		{
 			//Els actualitzem
-			obj.Update();
+			obj.Update(lastRiverObject[i]);
+			if(incrementVelocity)obj.UpdateVelocity(player->GetPuntuacion());
 
 			//Comprovem si hi ha colisio o no
 			if (Collision(obj, *player))
@@ -154,10 +162,11 @@ void GameScene::Update()
 	for (int i = 0; i < 5; i++)
 	{
 		//Recorrem tots els objectes de la carretera
-		for (DynamicObject &obj : roadObjects[i])
+		for (DynamicObject &obj : roadLinesObjects[i])
 		{
 			//Els actualitzem
-			obj.Update();
+			obj.Update(lastRoadObject[i]);
+			if (incrementVelocity)obj.UpdateVelocity(player->GetPuntuacion());
 
 			//Detectem si colisionen
 			if (Collision(obj, *player))
@@ -185,6 +194,7 @@ void GameScene::Update()
 	//li donem el valor a false amb la finalitat de que si
 	//cau de la plataforma es mori.
 	playerInPlatform = false;
+	incrementVelocity = false;
 }
 
 void GameScene::InsertInsect()
@@ -245,6 +255,9 @@ GameScene::GameScene(SDL_Renderer *renderer, SDL_Texture *global, GameState *sta
 	level = 1;
 	player = rana;
 	difficult = d;
+	oldPuntuation = 0;
+	currentTime = 20;
+	initalTime = 20;
 }
 
 GameScene::~GameScene()
@@ -294,7 +307,7 @@ void GameScene::Loop()
 									insectTake = true;
 								}
 								else player->SumaPuntuacion(50);
-								cout << player->GetPuntuacion() << endl;
+								std::cout << player->GetPuntuacion() << endl;
 								firstOccupied = true;
 								player->PosInicial();
 								
@@ -426,28 +439,33 @@ void GameScene::Start()
 	SDL_Rect carCollision = { 0,300,75,50 };
 	SDL_Rect carImg = { 40,265,35,25 };
 	DynamicObject car(carImg, carCollision, false);
+	car.SetDistance(100);
 
 	SDL_Rect woodCollision;
 	SDL_Rect woodImg = { 7,165,180,25 };
 	DynamicObject wood(woodImg, woodCollision, false);
+	wood.SetDistance(200);
 
 	if (*difficult == Difficulty::EASE)
 	{
 		player->SetVidas(10);
-		car.SetVelociti(1);
-		wood.SetVelociti(1);
+		car.SetVelocity(1);
+		wood.SetVelocity(1);
+		initalTime = 20;
 	}
 	else if (*difficult == Difficulty::MEDIUM)
 	{
 		player->SetVidas(5);
-		car.SetVelociti(2);
-		wood.SetVelociti(2);
+		car.SetVelocity(2);
+		wood.SetVelocity(2);
+		initalTime = 20/1.5;
 	}
 	else
 	{
 		player->SetVidas(1);
-		car.SetVelociti(3);
-		wood.SetVelociti(3);
+		car.SetVelocity(3);
+		wood.SetVelocity(3);
+		initalTime = 20 / 2.5;
 	}
 
 	firstOccupied = false;
@@ -472,16 +490,21 @@ void GameScene::Start()
 	//River Objects
 
 	//Array de 3 elemetns, ja que son 3 files
-	riverObjects = new vector<DynamicObject>[3];
+	riverElementsForLine = 5;
+	roadElementsForLine = 5;
+
+	riverLinesObjects = new vector<DynamicObject>[3];
+	lastRiverObject = new DynamicObject*[3];
 
 	
 	int finalX = 800 - 800 / 3;
 	int positionX;
 	int width;
-
-	for (int i = 0; i < 3; i++)
+	
+	for (int i = 0; i < riverElementsForLine; i++)
 	{
-		positionX = 0 - (800 / 3 * i + 100 * i);
+		//wood.SetDistance(200)
+		positionX = 0 - (800 / 3 * i + wood.GetDistance() * i);
 		width = 800 / 3;
 
 		woodCollision = { positionX,70,width,50 };
@@ -489,9 +512,9 @@ void GameScene::Start()
 		wood.SetCollision(woodCollision);
 		wood.SetImgBox(woodImg);
 		wood.SetDirection(false);
-		riverObjects[2].push_back(wood);
+		riverLinesObjects[2].push_back(wood);
 
-		positionX = finalX + (800 / 6 * i + 200 * i);
+		positionX = finalX + (800 / 6 * i + wood.GetDistance() * i);
 		width = 800 / 6;
 
 		woodCollision = { positionX,120,width,50 };
@@ -499,9 +522,9 @@ void GameScene::Start()
 		wood.SetCollision(woodCollision);
 		wood.SetImgBox(woodImg);
 		wood.SetDirection(true);
-		riverObjects[1].push_back(wood);
+		riverLinesObjects[1].push_back(wood);
 
-		positionX = 0 - (((800 / 6) + 800 / 12) *i + 100 * i);
+		positionX = 0 - (((800 / 6) + 800 / 12) *i + wood.GetDistance() * i);
 		width = (800 / 6) + 800 / 12;
 
 		woodCollision = { positionX,170,width,50 };
@@ -509,50 +532,67 @@ void GameScene::Start()
 		wood.SetCollision(woodCollision);
 		wood.SetImgBox(woodImg);
 		wood.SetDirection(false);
-		riverObjects[0].push_back(wood);
+		riverLinesObjects[0].push_back(wood);
+
+		if (i == riverElementsForLine-1)
+		{
+			lastRiverObject[0] = &riverLinesObjects[0][i];
+			lastRiverObject[1] = &riverLinesObjects[1][i];
+			lastRiverObject[2] = &riverLinesObjects[2][i];
+		}
 	}
 
 	// Road Objects
 
 	//Array de 3 elemetns, ja que son 3 files
-	roadObjects = new vector<DynamicObject>[5];
+	roadLinesObjects = new vector<DynamicObject>[5];
+	lastRoadObject = new DynamicObject*[5];
 	finalX = 800 - 75;
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < roadElementsForLine; i++)
 	{
-		carCollision = { finalX + (carCollision.w*i + 200 * i),250,75,50 };
+		carCollision = { finalX + (carCollision.w*i + car.GetDistance() * i),250,75,50 };
 		carImg = { 110,295,40,25 };
 		car.SetCollision(carCollision);
 		car.SetImgBox(carImg);
 		car.SetDirection(true);
-		roadObjects[4].push_back(car);
+		roadLinesObjects[4].push_back(car);
 
-		carCollision = { 0 - (carCollision.w*i + 140 * i) ,300,75,50 };
+		carCollision = { 0 - (carCollision.w*i + car.GetDistance() * i) ,300,75,50 };
 		carImg = { 40,265,35,25 };
 		car.SetCollision(carCollision);
 		car.SetImgBox(carImg);
 		car.SetDirection(false);
-		roadObjects[3].push_back(car);
+		roadLinesObjects[3].push_back(car);
 
-		carCollision = { finalX + (carCollision.w*i + 150 * i),350,75,50 };
+		carCollision = { finalX + (carCollision.w*i + car.GetDistance() * i),350,75,50 };
 		carImg = { 10,265,35,25 };
 		car.SetCollision(carCollision);
 		car.SetImgBox(carImg);
 		car.SetDirection(true);
-		roadObjects[2].push_back(car);
+		roadLinesObjects[2].push_back(car);
 
-		carCollision = { 0 - (carCollision.w*i + 160 * i) ,400,75,50 };
+		carCollision = { 0 - (carCollision.w*i + car.GetDistance() * i) ,400,75,50 };
 		carImg = { 10,295,30,33 };
 		car.SetCollision(carCollision);
 		car.SetImgBox(carImg);
 		car.SetDirection(false);
-		roadObjects[1].push_back(car);
+		roadLinesObjects[1].push_back(car);
 
-		carCollision = {finalX + (carCollision.w*i + 170 * i),450,75,50 };
+		carCollision = {finalX + (carCollision.w*i + car.GetDistance() * i),450,75,50 };
 		carImg = { 80,265,35,25 };
 		car.SetCollision(carCollision);
 		car.SetImgBox(carImg);
 		car.SetDirection(true);
-		roadObjects[0].push_back(car);
+		roadLinesObjects[0].push_back(car);
+
+		if (i == roadElementsForLine - 1)
+		{
+			lastRoadObject[0] = &roadLinesObjects[0][i];
+			lastRoadObject[1] = &roadLinesObjects[1][i];
+			lastRoadObject[2] = &roadLinesObjects[2][i];
+			lastRoadObject[3] = &roadLinesObjects[3][i];
+			lastRoadObject[4] = &roadLinesObjects[4][i];
+		}
 	}
 }
