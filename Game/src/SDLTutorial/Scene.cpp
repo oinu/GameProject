@@ -6,27 +6,18 @@ Scene::Scene()
 {
 }
 
-Scene::Scene(SDL_Renderer * renderer, SDL_Texture *texture,GameState *g)
+Scene::Scene(SDL_Renderer * renderer, SDL_Texture *texture,GameState *g, Difficulty* d)
 {
 	r = renderer;
 	t = texture;
 	gameState = g;
+	difficult = d;
 }
 
 
 Scene::~Scene()
 {
 }
-
-/*void Scene::Loop(GameState &g)
-{
-	gameState = g;
-	for (bool isRunning = true; isRunning;)
-	{
-		isRunning=Update(false);
-		Draw();
-	}
-}*/
 
 void Scene::Loop()
 {
