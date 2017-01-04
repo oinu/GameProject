@@ -42,7 +42,7 @@ void MenuScene::Loop()
 					&& (evnt.button.x >= 300 && evnt.button.x <= 470))
 				{
 					isRunning = false;
-					*gameState = GameState::GAME;
+					*gameState = GameState::DIFFICULTY;
 				}
 				else if (evnt.button.y >= 350 && evnt.button.y <= 410
 					&& evnt.button.x >= 260 && evnt.button.x <= 510)
