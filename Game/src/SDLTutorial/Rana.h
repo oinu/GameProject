@@ -48,5 +48,7 @@ public:
 
 	//Suma el valor a la puntuacio del jugador.
 	void SumaPuntuacion(int);
+
+	void PosInicial();
 };
 

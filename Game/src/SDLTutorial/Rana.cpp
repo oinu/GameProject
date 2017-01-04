@@ -99,3 +99,8 @@ void Rana::SumaPuntuacion(int value)
 {
 	puntuacion += value;
 }
+
+void Rana::PosInicial()
+{
+	collision = { 800 / 2 - 50,600 - 100,50,50 };
+}
