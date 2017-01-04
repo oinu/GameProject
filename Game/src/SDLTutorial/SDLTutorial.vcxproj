@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DifficultyScene.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DifficultyScene.h" />
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="GameManager.h" />

@@ -41,6 +41,9 @@
     <ClCompile Include="Scene.cpp">
       <Filter>SceneObjects</Filter>
     </ClCompile>
+    <ClCompile Include="DifficultyScene.cpp">
+      <Filter>SceneObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render.h">
@@ -75,6 +78,9 @@
     </ClInclude>
     <ClInclude Include="Ranking.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="DifficultyScene.h">
+      <Filter>SceneObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
