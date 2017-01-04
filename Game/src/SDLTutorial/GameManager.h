@@ -8,6 +8,7 @@ class GameManager
 {
 private:
 	MenuScene *menu;
+	DifficultyScene *diff;
 	GameScene *game;
 	Difficulty difficult;
 	//Determina en quin moment del joc ens trobem
@@ -40,6 +41,8 @@ public:
 
 	//Menu Principal
 	void MainMenu();
+
+	void SelectDifficulty();
 
 	//Jugar
 	void Game();

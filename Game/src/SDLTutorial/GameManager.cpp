@@ -28,13 +28,14 @@ GameManager::GameManager()
 
 		//Game State
 		gameState = GameState::MENU;
-		difficult = Difficulty::EASE;
+		//difficult = Difficulty::EASE;
 
 		//Recuperar el ranking
 		ranking = new Ranking(fileManager);
 
 		menu = new MenuScene(renderer, globalTexture,&gameState,&difficult);
 		game = new GameScene(renderer, globalTexture, &gameState, &player, &difficult);
+		diff = new DifficultyScene(renderer, globalTexture, &gameState, &difficult);
 	}
 	catch (const char *msg) {
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s", msg);
@@ -53,6 +54,11 @@ void GameManager::MainMenu()
 	menu->Loop();
 }
 
+void GameManager::SelectDifficulty()
+{
+	diff->Loop();
+}
+
 void GameManager::Game()
 {
 	game->Start();
@@ -67,6 +73,7 @@ void GameManager::GameLoop()
 	{
 		if (gameState == GameState::GAME)Game();
 		else if (gameState == GameState::MENU)MainMenu();
+		else if (gameState == GameState::DIFFICULTY)SelectDifficulty();
 	}
 	SDL_Quit();
 }
