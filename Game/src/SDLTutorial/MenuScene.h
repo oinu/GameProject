@@ -6,7 +6,7 @@ class MenuScene :
 	SDL_Texture * menu;
 	void Draw();
 public:
-	MenuScene(SDL_Renderer *, SDL_Texture *,GameState*);
+	MenuScene(SDL_Renderer *, SDL_Texture *,GameState*, Difficulty*);
 	~MenuScene();
 	void Loop();
 };

@@ -2,12 +2,13 @@
 
 
 
-MenuScene::MenuScene(SDL_Renderer * renderer, SDL_Texture *global, GameState* g)
+MenuScene::MenuScene(SDL_Renderer * renderer, SDL_Texture *global, GameState* g, Difficulty* d)
 {
 	r = renderer;
 	t = global;
 	gameState = g;
 	menu= IMG_LoadTexture(r, "../../res/gfx/options.png");
+	difficult = d;
 }
 
 MenuScene::~MenuScene()
