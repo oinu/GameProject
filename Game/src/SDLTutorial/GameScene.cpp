@@ -2,7 +2,38 @@
 
 
 
+
 bool GameScene::Collision(DynamicObject & d, Rana & r)
+{
+
+
+	//Despres de ferla 5 vagades, es queda aixi
+	//La colisio es des del punt centric de la r
+
+	//Calculem el punt centric de la r
+	int rXCenter = r.GetCollision().x + r.GetCollision().w / 2;
+	int rYCenter = r.GetCollision().y + r.GetCollision().h / 2;
+
+	//Calculem els 4 punts de la d
+	int dYMax = d.GetCollision().y + d.GetCollision().h;
+	int dXMax = d.GetCollision().x + d.GetCollision().w;
+	int dXMin = d.GetCollision().x;
+	int dYMin = d.GetCollision().y;
+
+	//Mirem si hi ha collisio
+	bool collVertical = dYMin <= rYCenter && dYMax >= rYCenter;
+	bool collLateral = dXMin <= rXCenter && dXMax >= rXCenter;
+
+	if (collLateral  && collVertical)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+bool GameScene::Collision(Object & d, Rana & r)
 {
 
 
@@ -56,7 +87,10 @@ void GameScene::Draw()
 			//SDL_RenderCopy(renderer, globalTexture, &obj.GetImgBox(), &obj.GetCollision());
 			obj.Draw(r, t);
 		}
+	}
 
+	for (int i = 0; i < 5; i++)
+	{
 		//Per cada element de la carretera
 		for (DynamicObject obj : roadObjects[i])
 		{
@@ -69,6 +103,7 @@ void GameScene::Draw()
 	//Coloquem la textura del personatge
 	//SDL_RenderCopy(renderer, globalTexture, &player.GetImgBox(), &player.GetCollision());
 	player->Draw(r, t);
+	if(!insectTake)insect.Draw(r, t);
 
 	if (firstOccupied)SDL_RenderCopy(r, t, &player->GetImgBox(), new SDL_Rect{ 30,0,player->GetCollision().w,player->GetCollision().h });
 	if (secondOccupied)SDL_RenderCopy(r, t, &player->GetImgBox(), new SDL_Rect{ 200,0,player->GetCollision().w,player->GetCollision().h });
@@ -114,7 +149,10 @@ void GameScene::Update()
 				}
 			}
 		}
-
+	}
+	
+	for (int i = 0; i < 5; i++)
+	{
 		//Recorrem tots els objectes de la carretera
 		for (DynamicObject &obj : roadObjects[i])
 		{
@@ -127,8 +165,7 @@ void GameScene::Update()
 				//Si colisionen, li restem vida
 				//i el coloquem el punt de partida
 				player->RestaVida();
-				SDL_Rect temp = { 800 / 2 - 50,600 - 50,50,50 };
-				player->SetCollision(temp);
+				player->PosInicial();
 				cout << player->GetVidas() << endl;
 			}
 		}
@@ -141,8 +178,7 @@ void GameScene::Update()
 		//Si colisionen, li restem vida
 		//i el coloquem el punt de partida
 		player->RestaVida();
-		SDL_Rect temp = { 800 / 2 - 50,600 - 50,50,50 };
-		player->SetCollision(temp);
+		player->PosInicial();
 		cout << player->GetVidas() << endl;
 	}
 
@@ -151,93 +187,64 @@ void GameScene::Update()
 	playerInPlatform = false;
 }
 
-GameScene::GameScene(SDL_Renderer *renderer, SDL_Texture *global, GameState *state,int lvl,Rana *rana)
+void GameScene::InsertInsect()
+{
+	srand(time(NULL));
+	int randomNumber = rand() % 5 + 1;
+	insect.SetCollision(player->GetCollision());
+	SDL_Rect img= { 135,230,25,25 };
+	insect.SetImgBox(img);
+	SDL_Rect tmp;
+	insectTake = false;
+
+	switch (randomNumber)
+	{
+	case 1:
+		if (!firstOccupied)
+		{
+			tmp={ 30,10,player->GetCollision().w,player->GetCollision().h };
+		}
+		break;
+	case 2:
+		if (!secondOccupied)
+		{
+			tmp = { 200,10,player->GetCollision().w,player->GetCollision().h };
+		}
+		break;
+	case 3:
+		if (!thirdOccupied)
+		{
+			tmp = { 370,10,player->GetCollision().w,player->GetCollision().h };
+		}
+		break;
+	case 4:
+		if (!fourthOccupied)
+		{
+			tmp = { 540,10,player->GetCollision().w,player->GetCollision().h };
+		}
+		break;
+	case 5:
+		if (!fifthOccupied)
+		{
+			tmp = { 710,10,player->GetCollision().w,player->GetCollision().h };
+		}
+		break;
+	default:
+		tmp = player->GetCollision();
+		cout << randomNumber;
+		break;
+	}
+	insect.SetCollision(tmp);
+}
+
+GameScene::GameScene(SDL_Renderer *renderer, SDL_Texture *global, GameState *state,Rana *rana,Difficulty* d)
 {
 	r = renderer;
 	t = global;
 	gameState = state;
-	level = lvl;
+	level = 1;
 	player = rana;
-
-	// Paret verda
-	SDL_Rect forestCollision = { 0,0,800,80 };
-	SDL_Rect forestImg = { 0,60,800,60 };
-	Object forest(forestImg, forestCollision);
-	sceneObject.push_back(forest);
-
-	//Riu
-	SDL_Rect waterCollision = { 0,70,800,150 };
-	SDL_Rect waterImg = { 0,120,800,35 };
-	Object water(waterImg, waterCollision);
-	sceneObject.push_back(water);
-
-	//River Objects
-
-	//Array de 3 elemetns, ja que son 3 files
-	riverObjects = new vector<DynamicObject>[3];
-
-	SDL_Rect woodCollision;
-	SDL_Rect woodImg = { 7,165,180,25 };
-	DynamicObject wood(woodImg, woodCollision, false);
-	int finalX = 800 - 800 / 3;
-
-	for (int i = 0; i < 3; i++)
-	{
-		woodCollision = { 0 - (woodCollision.w*i + 100 * i),70,800 / 3,50 };
-		wood.SetCollision(woodCollision);
-		wood.SetImgBox(woodImg);
-		wood.SetDirection(false);
-		riverObjects[2].push_back(wood);
-
-		woodCollision = { finalX + (woodCollision.w*i + 100 * i),120,800 / 3,50 };
-		woodImg = { 7,165,180,25 };
-		wood.SetCollision(woodCollision);
-		wood.SetImgBox(woodImg);
-		wood.SetDirection(true);
-		riverObjects[1].push_back(wood);
-
-		woodCollision = { 0 - (woodCollision.w*i + 100 * i),170,800 / 3,50 };
-		woodImg = { 7,165,180,25 };
-		wood.SetCollision(woodCollision);
-		wood.SetImgBox(woodImg);
-		wood.SetDirection(false);
-		riverObjects[0].push_back(wood);
-	}
-
-	// Road Objects
-
-	//Array de 3 elemetns, ja que son 3 files
-	roadObjects = new vector<DynamicObject>[3];
-	finalX = 800 - 75;
-
-	SDL_Rect carCollision = { 0,300,75,50 };
-	SDL_Rect carImg = { 40,265,35,25 };
-	DynamicObject car(carImg, carCollision, false);
-
-	for (int i = 0; i < 3; i++)
-	{
-		carCollision = { 0 - (carCollision.w*i + 100 * i),300,75,50 };
-		carImg = { 40,265,35,25 };
-		car.SetCollision(carCollision);
-		car.SetImgBox(carImg);
-		car.SetDirection(false);
-		roadObjects[2].push_back(car);
-
-		carCollision = { finalX + (carCollision.w*i + 100 * i),350,75,50 };
-		carImg = { 80,265,35,25 };
-		car.SetCollision(carCollision);
-		car.SetImgBox(carImg);
-		car.SetDirection(true);
-		roadObjects[1].push_back(car);
-
-		carCollision = { 0 - (carCollision.w*i + 100 * i),400,75,50 };
-		carImg = { 40,265,35,25 };
-		car.SetCollision(carCollision);
-		car.SetImgBox(carImg);
-		car.SetDirection(false);
-		roadObjects[0].push_back(car);
-	}
-
+	difficult = d;
 }
 
 GameScene::~GameScene()
@@ -281,9 +288,16 @@ void GameScene::Loop()
 								//Activa la imatge dins la casella
 								//El Coloca al inici
 								player->MoveUp();
+								if (Collision(insect, *player))
+								{
+									player->SumaPuntuacion(200);
+									insectTake = true;
+								}
+								else player->SumaPuntuacion(50);
+								cout << player->GetPuntuacion() << endl;
 								firstOccupied = true;
-								SDL_Rect temp = { 800 / 2 - 50,600 - 50,50,50 };
-								player->SetCollision(temp);
+								player->PosInicial();
+								
 							}
 							else if (!secondOccupied && player->GetCollision().x >= 173 && player->GetCollision().x <= 225)
 							{
@@ -291,9 +305,15 @@ void GameScene::Loop()
 								//Activa la imatge dins la casella
 								//El Coloca al inici
 								player->MoveUp();
+								if (Collision(insect, *player))
+								{
+									player->SumaPuntuacion(200);
+									insectTake = true;
+								}
+								else player->SumaPuntuacion(50);
+								cout << player->GetPuntuacion() << endl;
 								secondOccupied = true;
-								SDL_Rect temp = { 800 / 2 - 50,600 - 50,50,50 };
-								player->SetCollision(temp);
+								player->PosInicial();
 							}
 							else if (!thirdOccupied && player->GetCollision().x >= 350 && player->GetCollision().x <= 400)
 							{
@@ -301,9 +321,15 @@ void GameScene::Loop()
 								//Activa la imatge dins la casella
 								//El Coloca al inici
 								player->MoveUp();
+								if (Collision(insect, *player))
+								{
+									player->SumaPuntuacion(200);
+									insectTake = true;
+								}
+								else player->SumaPuntuacion(50);
+								cout << player->GetPuntuacion() << endl;
 								thirdOccupied = true;
-								SDL_Rect temp = { 800 / 2 - 50,600 - 50,50,50 };
-								player->SetCollision(temp);
+								player->PosInicial();
 							}
 							else if (!fourthOccupied && player->GetCollision().x >= 520 && player->GetCollision().x <= 565)
 							{
@@ -311,9 +337,15 @@ void GameScene::Loop()
 								//Activa la imatge dins la casella
 								//El Coloca al inici
 								player->MoveUp();
+								if (Collision(insect, *player))
+								{
+									player->SumaPuntuacion(200);
+									insectTake = true;
+								}
+								else player->SumaPuntuacion(50);
+								cout << player->GetPuntuacion() << endl;
 								fourthOccupied = true;
-								SDL_Rect temp = { 800 / 2 - 50,600 - 50,50,50 };
-								player->SetCollision(temp);
+								player->PosInicial();
 							}
 							else if (!fifthOccupied && player->GetCollision().x >= 700 && player->GetCollision().x <= 735)
 							{
@@ -321,14 +353,28 @@ void GameScene::Loop()
 								//Activa la imatge dins la casella
 								//El Coloca al inici
 								player->MoveUp();
+								if (Collision(insect, *player))
+								{
+									player->SumaPuntuacion(200);
+									insectTake = true;
+								}
+								else player->SumaPuntuacion(50);
+								cout << player->GetPuntuacion() << endl;
 								fifthOccupied = true;
-								SDL_Rect temp = { 800 / 2 - 50,600 - 50,50,50 };
-								player->SetCollision(temp);
+								player->PosInicial();
 							}
 
 						}
 						//Si no es a l'ultim tronc, abansa normal
-						else player->MoveUp();
+						else
+						{
+							player->MoveUp();
+							if(player->GetCollision().y==200)
+							{
+								player->SumaPuntuacion(10);
+							}
+							cout << player->GetPuntuacion() << endl;
+						}
 						break;
 					case SDLK_DOWN:
 						player->MoveDown(600);
@@ -345,15 +391,168 @@ void GameScene::Loop()
 				}
 
 			}
-			//UPDATE
-			Update();
+			if (player->GetVidas() == 0)
+			{
+				*gameState = GameState::MENU;
+				isRunning = false;
+			}
+			else if (firstOccupied && secondOccupied && thirdOccupied
+				&& fourthOccupied && fifthOccupied)
+			{
+				player->SumaPuntuacion(1000);
+				player->PosInicial();
 
-			//DRAW
-			Draw();
+				//Canviar l'Start per un NextLvl
+				Start();
+			}
+			else
+			{
+				//UPDATE
+				Update();
+
+				//DRAW
+				Draw();
+			}
 		}
 	}
 	catch (const char *msg) {
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s", msg);
 	}
-	SDL_Quit();
+}
+
+void GameScene::Start()
+{
+	InsertInsect();
+	SDL_Rect carCollision = { 0,300,75,50 };
+	SDL_Rect carImg = { 40,265,35,25 };
+	DynamicObject car(carImg, carCollision, false);
+
+	SDL_Rect woodCollision;
+	SDL_Rect woodImg = { 7,165,180,25 };
+	DynamicObject wood(woodImg, woodCollision, false);
+
+	if (*difficult == Difficulty::EASE)
+	{
+		player->SetVidas(10);
+		car.SetVelociti(1);
+		wood.SetVelociti(1);
+	}
+	else if (*difficult == Difficulty::MEDIUM)
+	{
+		player->SetVidas(5);
+		car.SetVelociti(2);
+		wood.SetVelociti(2);
+	}
+	else
+	{
+		player->SetVidas(1);
+		car.SetVelociti(3);
+		wood.SetVelociti(3);
+	}
+
+	firstOccupied = false;
+	secondOccupied = false;
+	thirdOccupied = false;
+	fourthOccupied = false;
+	fifthOccupied = false;
+	playerInPlatform = false;
+
+	// Paret verda
+	SDL_Rect forestCollision = { 0,0,800,80 };
+	SDL_Rect forestImg = { 0,60,800,60 };
+	Object forest(forestImg, forestCollision);
+	sceneObject.push_back(forest);
+
+	//Riu
+	SDL_Rect waterCollision = { 0,70,800,150 };
+	SDL_Rect waterImg = { 0,120,800,35 };
+	Object water(waterImg, waterCollision);
+	sceneObject.push_back(water);
+
+	//River Objects
+
+	//Array de 3 elemetns, ja que son 3 files
+	riverObjects = new vector<DynamicObject>[3];
+
+	
+	int finalX = 800 - 800 / 3;
+	int positionX;
+	int width;
+
+	for (int i = 0; i < 3; i++)
+	{
+		positionX = 0 - (800 / 3 * i + 100 * i);
+		width = 800 / 3;
+
+		woodCollision = { positionX,70,width,50 };
+		woodImg = { 7,165,180,25 };
+		wood.SetCollision(woodCollision);
+		wood.SetImgBox(woodImg);
+		wood.SetDirection(false);
+		riverObjects[2].push_back(wood);
+
+		positionX = finalX + (800 / 6 * i + 200 * i);
+		width = 800 / 6;
+
+		woodCollision = { positionX,120,width,50 };
+		woodImg = { 7,230,90,25 };
+		wood.SetCollision(woodCollision);
+		wood.SetImgBox(woodImg);
+		wood.SetDirection(true);
+		riverObjects[1].push_back(wood);
+
+		positionX = 0 - (((800 / 6) + 800 / 12) *i + 100 * i);
+		width = (800 / 6) + 800 / 12;
+
+		woodCollision = { positionX,170,width,50 };
+		woodImg = { 7,197,135,25 };
+		wood.SetCollision(woodCollision);
+		wood.SetImgBox(woodImg);
+		wood.SetDirection(false);
+		riverObjects[0].push_back(wood);
+	}
+
+	// Road Objects
+
+	//Array de 3 elemetns, ja que son 3 files
+	roadObjects = new vector<DynamicObject>[5];
+	finalX = 800 - 75;
+
+	for (int i = 0; i < 3; i++)
+	{
+		carCollision = { finalX + (carCollision.w*i + 200 * i),250,75,50 };
+		carImg = { 110,295,40,25 };
+		car.SetCollision(carCollision);
+		car.SetImgBox(carImg);
+		car.SetDirection(true);
+		roadObjects[4].push_back(car);
+
+		carCollision = { 0 - (carCollision.w*i + 140 * i) ,300,75,50 };
+		carImg = { 40,265,35,25 };
+		car.SetCollision(carCollision);
+		car.SetImgBox(carImg);
+		car.SetDirection(false);
+		roadObjects[3].push_back(car);
+
+		carCollision = { finalX + (carCollision.w*i + 150 * i),350,75,50 };
+		carImg = { 10,265,35,25 };
+		car.SetCollision(carCollision);
+		car.SetImgBox(carImg);
+		car.SetDirection(true);
+		roadObjects[2].push_back(car);
+
+		carCollision = { 0 - (carCollision.w*i + 160 * i) ,400,75,50 };
+		carImg = { 10,295,30,33 };
+		car.SetCollision(carCollision);
+		car.SetImgBox(carImg);
+		car.SetDirection(false);
+		roadObjects[1].push_back(car);
+
+		carCollision = {finalX + (carCollision.w*i + 170 * i),450,75,50 };
+		carImg = { 80,265,35,25 };
+		car.SetCollision(carCollision);
+		car.SetImgBox(carImg);
+		car.SetDirection(true);
+		roadObjects[0].push_back(car);
+	}
 }

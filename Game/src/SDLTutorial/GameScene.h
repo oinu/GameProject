@@ -4,6 +4,7 @@
 #include "DynamicObject.h"
 #include "Rana.h"
 #include <iostream>
+#include <time.h>
 using namespace std;
 
 class GameScene :
@@ -11,6 +12,8 @@ class GameScene :
 {
 	int level;
 	Rana *player;
+	Object insect;
+	bool insectTake;
 	vector<Object> sceneObject;
 	vector<DynamicObject> *riverObjects;
 	vector<DynamicObject> *roadObjects;
@@ -24,12 +27,15 @@ class GameScene :
 	bool fifthOccupied;
 
 	bool Collision(DynamicObject &d, Rana &r);
+	bool Collision(Object &d, Rana &r);
 
 	void Draw();
 	void Update();
+	void InsertInsect();
 public:
-	GameScene(SDL_Renderer *, SDL_Texture *, GameState*,int,Rana *);
+	GameScene(SDL_Renderer *, SDL_Texture *, GameState*,Rana *,Difficulty*);
 	~GameScene();
 	void Loop();
+	void Start();
 };
 
