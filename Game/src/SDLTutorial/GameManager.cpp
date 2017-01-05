@@ -34,7 +34,7 @@ GameManager::GameManager()
 		ranking = new Ranking(fileManager);
 
 		menu = new MenuScene(renderer, globalTexture,&gameState,&difficult);
-		game = new GameScene(renderer, globalTexture, &gameState, &player, &difficult);
+		game = new GameScene(renderer, globalTexture, &gameState, &player, &difficult,&fileManager);
 		diff = new DifficultyScene(renderer, globalTexture, &gameState, &difficult);
 	}
 	catch (const char *msg) {

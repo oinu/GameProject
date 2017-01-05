@@ -5,12 +5,14 @@
 #include "Rana.h"
 #include <iostream>
 #include <time.h>
+#include "FileManager.h"
 using namespace std;
 
 class GameScene :
 	public Scene
 {
 	int level;
+	FileManager *fileManager;
 
 	Rana *player;
 	int oldPuntuation;
@@ -47,7 +49,7 @@ class GameScene :
 	void Update();
 	void InsertInsect();
 public:
-	GameScene(SDL_Renderer *, SDL_Texture *, GameState*,Rana *,Difficulty*);
+	GameScene(SDL_Renderer *, SDL_Texture *, GameState*,Rana *,Difficulty*,FileManager*);
 	~GameScene();
 	void Loop();
 	void Start();

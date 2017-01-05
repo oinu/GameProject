@@ -247,7 +247,7 @@ void GameScene::InsertInsect()
 	insect.SetCollision(tmp);
 }
 
-GameScene::GameScene(SDL_Renderer *renderer, SDL_Texture *global, GameState *state,Rana *rana,Difficulty* d)
+GameScene::GameScene(SDL_Renderer *renderer, SDL_Texture *global, GameState *state,Rana *rana,Difficulty* d, FileManager* f)
 {
 	r = renderer;
 	t = global;
@@ -258,6 +258,7 @@ GameScene::GameScene(SDL_Renderer *renderer, SDL_Texture *global, GameState *sta
 	oldPuntuation = 0;
 	currentTime = 20;
 	initalTime = 20;
+	fileManager = f;
 }
 
 GameScene::~GameScene()
@@ -414,6 +415,7 @@ void GameScene::Loop()
 			{
 				player->SumaPuntuacion(1000);
 				player->PosInicial();
+				if (level < 3)level++;
 
 				//Canviar l'Start per un NextLvl
 				Start();
@@ -444,29 +446,12 @@ void GameScene::Start()
 	SDL_Rect woodCollision;
 	SDL_Rect woodImg = { 7,165,180,25 };
 	DynamicObject wood(woodImg, woodCollision, false);
-	wood.SetDistance(200);
-
-	if (*difficult == Difficulty::EASE)
-	{
-		player->SetVidas(10);
-		car.SetVelocity(1);
-		wood.SetVelocity(1);
-		initalTime = 20;
-	}
-	else if (*difficult == Difficulty::MEDIUM)
-	{
-		player->SetVidas(5);
-		car.SetVelocity(2);
-		wood.SetVelocity(2);
-		initalTime = 20/1.5;
-	}
-	else
-	{
-		player->SetVidas(1);
-		car.SetVelocity(3);
-		wood.SetVelocity(3);
-		initalTime = 20 / 2.5;
-	}
+	wood.SetDistance(300);
+	
+	player->SetVidas(fileManager->PlayerLives(*difficult));
+	car.SetVelocity(fileManager->CarVelocity(*difficult));
+	wood.SetVelocity(fileManager->WoodVelocity(*difficult));
+	initalTime = fileManager->TimePlayer(*difficult);
 
 	firstOccupied = false;
 	secondOccupied = false;
@@ -490,8 +475,8 @@ void GameScene::Start()
 	//River Objects
 
 	//Array de 3 elemetns, ja que son 3 files
-	riverElementsForLine = 5;
-	roadElementsForLine = 5;
+	riverElementsForLine = fileManager->RiverElementsForLine(level);
+	roadElementsForLine = fileManager->RoadElementsForLine(level);
 
 	riverLinesObjects = new vector<DynamicObject>[3];
 	lastRiverObject = new DynamicObject*[3];
@@ -503,7 +488,7 @@ void GameScene::Start()
 	
 	for (int i = 0; i < riverElementsForLine; i++)
 	{
-		//wood.SetDistance(200)
+		wood.SetDistance(200);
 		positionX = 0 - (800 / 3 * i + wood.GetDistance() * i);
 		width = 800 / 3;
 
@@ -514,6 +499,7 @@ void GameScene::Start()
 		wood.SetDirection(false);
 		riverLinesObjects[2].push_back(wood);
 
+		wood.SetDistance(200);
 		positionX = finalX + (800 / 6 * i + wood.GetDistance() * i);
 		width = 800 / 6;
 
@@ -524,6 +510,7 @@ void GameScene::Start()
 		wood.SetDirection(true);
 		riverLinesObjects[1].push_back(wood);
 
+		wood.SetDistance(200);
 		positionX = 0 - (((800 / 6) + 800 / 12) *i + wood.GetDistance() * i);
 		width = (800 / 6) + 800 / 12;
 
