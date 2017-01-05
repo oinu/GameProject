@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="DifficultyScene.h" />
     <ClInclude Include="DynamicObject.h" />
+    <ClInclude Include="Enumerators.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />

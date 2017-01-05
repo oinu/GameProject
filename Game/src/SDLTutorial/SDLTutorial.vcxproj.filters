@@ -82,5 +82,8 @@
     <ClInclude Include="DifficultyScene.h">
       <Filter>SceneObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Enumerators.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

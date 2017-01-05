@@ -1,9 +1,9 @@
 ﻿  GameScene.cpp
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\scene.h(4): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\scene.h(5): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
+d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(2): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
+d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
+d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(219): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(221): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\gamescene.cpp(202): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\gamescene.cpp(461): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\gamescene.cpp(468): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.exe
   SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.pdb (Full PDB)
   0 archivo(s) copiado(s)
