@@ -1,0 +1,38 @@
+<Game>
+	<Difficulty>
+		<Ease>
+			<Lives>10</Lives>
+			<CarVelocity>1</CarVelocity>
+			<WoodVelocity>1</WoodVelocity>
+			<FroggTime>20</FroggTime>
+			<DivisorTime>1</DivisorTime>
+		</Ease>
+		<Medium>
+			<Lives>5</Lives>
+			<CarVelocity>2</CarVelocity>
+			<WoodVelocity>2</WoodVelocity>
+			<FroggTime>20</FroggTime>
+			<DivisorTime>1.5</DivisorTime>
+		</Medium>
+		<Hard>
+			<Lives>1</Lives>
+			<CarVelocity>3</CarVelocity>
+			<WoodVelocity>3</WoodVelocity>
+			<FroggTime>20</FroggTime>
+			<DivisorTime>2.5</DivisorTime>
+		</Hard>
+	</Difficulty>
+	
+	<Level num="1">
+		<RiverElements>3</RiverElements>
+		<RoadElements>3</RoadElements>
+	</Level>
+	<Level num="2">
+		<RiverElements>3</RiverElements>
+		<RoadElements>4</RoadElements>
+	</Level>
+	<Level num="3">
+		<RiverElements>3</RiverElements>
+		<RoadElements>5</RoadElements>
+	</Level>
+</Game>
