@@ -7,7 +7,6 @@ DifficultyScene::DifficultyScene(SDL_Renderer * renderer, SDL_Texture *global, G
 	r = renderer;
 	t = global;
 	gameState = g;
-	menu = IMG_LoadTexture(r, "../../res/gfx/difficult.png");
 	difficult = d;
 }
 

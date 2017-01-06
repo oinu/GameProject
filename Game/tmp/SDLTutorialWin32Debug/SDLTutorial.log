@@ -1,51 +1,19 @@
-﻿  Scene.cpp
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(2): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\scene.cpp(25): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
-  d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(122): note: see declaration of 'SDL_Renderer'
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\scene.cpp(26): warning C4150: deletion of pointer to incomplete type 'SDL_Texture'; no destructor called
-  d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(128): note: see declaration of 'SDL_Texture'
-  RankingScene.cpp
+﻿  Main.cpp
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(2): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(219): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(221): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-  Rana.cpp
-  Object.cpp
-  MenuScene.cpp
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(2): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\menuscene.cpp(19): warning C4150: deletion of pointer to incomplete type 'SDL_Texture'; no destructor called
-  d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(128): note: see declaration of 'SDL_Texture'
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\menuscene.cpp(20): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
-  d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(122): note: see declaration of 'SDL_Renderer'
-  Main.cpp
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(2): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(219): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(221): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-  GameScene.cpp
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(2): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(219): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(221): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\gamescene.cpp(226): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\gamescene.cpp(233): warning C4800: 'int': forcing value to bool 'true' or 'false' (performance warning)
-  GameOverScene.cpp
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(2): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
   GameManager.cpp
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(2): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(219): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(221): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-  DynamicObject.cpp
   DifficultyScene.cpp
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(2): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\difficultyscene.cpp(21): warning C4150: deletion of pointer to incomplete type 'SDL_Texture'; no destructor called
+d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\difficultyscene.cpp(20): warning C4150: deletion of pointer to incomplete type 'SDL_Texture'; no destructor called
   d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(128): note: see declaration of 'SDL_Texture'
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\difficultyscene.cpp(22): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
+d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\difficultyscene.cpp(21): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
   d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(122): note: see declaration of 'SDL_Renderer'
   Generating Code...
   SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.exe
