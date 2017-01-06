@@ -44,6 +44,12 @@
     <ClCompile Include="DifficultyScene.cpp">
       <Filter>SceneObjects</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
+      <Filter>SceneObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="RankingScene.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render.h">
@@ -76,13 +82,19 @@
     <ClInclude Include="Scene.h">
       <Filter>SceneObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Ranking.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="DifficultyScene.h">
       <Filter>SceneObjects</Filter>
     </ClInclude>
     <ClInclude Include="Enumerators.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>SceneObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Ranking.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="RankingScene.h">
       <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>

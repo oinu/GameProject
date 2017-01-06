@@ -36,6 +36,8 @@ GameManager::GameManager()
 		menu = new MenuScene(renderer, globalTexture,&gameState,&difficult);
 		game = new GameScene(renderer, globalTexture, &gameState, &player, &difficult,&fileManager);
 		diff = new DifficultyScene(renderer, globalTexture, &gameState, &difficult);
+		gameOver= new GameOverScene(renderer, &gameState, &difficult);
+		rank = new RankingScene(renderer, &gameState, ranking,&player);
 	}
 	catch (const char *msg) {
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s", msg);
@@ -74,6 +76,8 @@ void GameManager::GameLoop()
 		if (gameState == GameState::GAME)Game();
 		else if (gameState == GameState::MENU)MainMenu();
 		else if (gameState == GameState::DIFFICULTY)SelectDifficulty();
+		else if (gameState == GameState::GAMEOVER)gameOver->Loop();
+		else if (gameState == GameState::RANKING)rank->Loop();
 	}
 	SDL_Quit();
 }

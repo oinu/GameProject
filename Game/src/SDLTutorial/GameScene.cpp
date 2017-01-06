@@ -111,13 +111,39 @@ void GameScene::Draw()
 	if (fourthOccupied)SDL_RenderCopy(r, t, &player->GetImgBox(), new SDL_Rect{ 540,0,player->GetCollision().w,player->GetCollision().h });
 	if (fifthOccupied)SDL_RenderCopy(r, t, &player->GetImgBox(), new SDL_Rect{ 710,0,player->GetCollision().w,player->GetCollision().h });
 
+	string text = "Lives: ";
+	text += to_string(player->GetVidas());
+	text +=" Score: ";
+	text += to_string(player->GetPuntuacion());
+	text += " Time: ";
+	text += to_string(playerTime);
+	SDL_Rect textLocation = { 0,550,250,25 };
+	RenderText(text.c_str(), textLocation);
+
+	//Pintem tots elements del renderer
+	SDL_RenderPresent(r);
+}
+
+void GameScene::DrawPause()
+{
+	SDL_RenderClear(r);
+
+	string text = "Resume";
+	SDL_Rect textLocation = { 300,150,200,50 };
+	RenderText(text.c_str(), textLocation);
+
+	text = "Exit";
+	textLocation = { 350,400,100,50 };
+	RenderText(text.c_str(), textLocation);
+
 	//Pintem tots elements del renderer
 	SDL_RenderPresent(r);
 }
 
 void GameScene::Update()
 {
-	
+	DecreaseTime();
+	InsertInsect();
 	if (player->GetPuntuacion() - oldPuntuation >= 1000)
 	{
 		incrementVelocity = true;
@@ -175,7 +201,6 @@ void GameScene::Update()
 				//i el coloquem el punt de partida
 				player->RestaVida();
 				player->PosInicial();
-				cout << player->GetVidas() << endl;
 			}
 		}
 	}
@@ -188,7 +213,6 @@ void GameScene::Update()
 		//i el coloquem el punt de partida
 		player->RestaVida();
 		player->PosInicial();
-		cout << player->GetVidas() << endl;
 	}
 
 	//li donem el valor a false amb la finalitat de que si
@@ -200,51 +224,95 @@ void GameScene::Update()
 void GameScene::InsertInsect()
 {
 	srand(time(NULL));
-	int randomNumber = rand() % 5 + 1;
-	insect.SetCollision(player->GetCollision());
-	SDL_Rect img= { 135,230,25,25 };
-	insect.SetImgBox(img);
-	SDL_Rect tmp;
-	insectTake = false;
+	time(insectCurrentTime);
+	double tmp = difftime(*insectCurrentTime, *insectTimeSaved);
+	bool randomPopUp=false;
 
-	switch (randomNumber)
+	if (insectPopUp && tmp >= 2)
 	{
-	case 1:
-		if (!firstOccupied)
-		{
-			tmp={ 30,10,player->GetCollision().w,player->GetCollision().h };
-		}
-		break;
-	case 2:
-		if (!secondOccupied)
-		{
-			tmp = { 200,10,player->GetCollision().w,player->GetCollision().h };
-		}
-		break;
-	case 3:
-		if (!thirdOccupied)
-		{
-			tmp = { 370,10,player->GetCollision().w,player->GetCollision().h };
-		}
-		break;
-	case 4:
-		if (!fourthOccupied)
-		{
-			tmp = { 540,10,player->GetCollision().w,player->GetCollision().h };
-		}
-		break;
-	case 5:
-		if (!fifthOccupied)
-		{
-			tmp = { 710,10,player->GetCollision().w,player->GetCollision().h };
-		}
-		break;
-	default:
-		tmp = player->GetCollision();
-		cout << randomNumber;
-		break;
+		randomPopUp = rand();
+		insectPopUp = !randomPopUp;
+		time(insectTimeSaved);
 	}
-	insect.SetCollision(tmp);
+	else if (!insectPopUp && tmp >= 5 && !randomPopUp)
+	{
+		insectPopUp = true;
+		time(insectTimeSaved);
+		insectTake = false;
+	}
+
+	if (randomPopUp)
+	{
+		int randomNumber = rand() % 5 + 1;
+		insect.SetCollision(player->GetCollision());
+		SDL_Rect img = { 135,230,25,25 };
+		insect.SetImgBox(img);
+		SDL_Rect tmp;
+		insectTake = false;
+
+		switch (randomNumber)
+		{
+		case 1:
+			if (!firstOccupied)
+			{
+				tmp = { 30,10,player->GetCollision().w,player->GetCollision().h };
+				randomPopUp = false;
+			}
+			break;
+		case 2:
+			if (!secondOccupied)
+			{
+				tmp = { 200,10,player->GetCollision().w,player->GetCollision().h };
+				randomPopUp = false;
+			}
+			break;
+		case 3:
+			if (!thirdOccupied)
+			{
+				tmp = { 370,10,player->GetCollision().w,player->GetCollision().h };
+				randomPopUp = false;
+			}
+			break;
+		case 4:
+			if (!fourthOccupied)
+			{
+				tmp = { 540,10,player->GetCollision().w,player->GetCollision().h };
+				randomPopUp = false;
+			}
+			break;
+		case 5:
+			if (!fifthOccupied)
+			{
+				tmp = { 710,10,player->GetCollision().w,player->GetCollision().h };
+				randomPopUp = false;
+			}
+			break;
+		default:
+			tmp = player->GetCollision();
+			break;
+		}
+		insect.SetCollision(tmp);
+		
+	}
+	
+}
+
+void GameScene::DecreaseTime()
+{
+	time(playerCurrentTime);
+	double tmp = difftime(*playerCurrentTime, *playerTimeSaved);
+
+	if (tmp >= 1)
+	{
+		playerTime--;
+		time(playerTimeSaved);
+	}
+	if (playerTime == 0)
+	{
+		player->RestaVida();
+		playerTime = initalTime;
+		player->PosInicial();
+	}
 }
 
 GameScene::GameScene(SDL_Renderer *renderer, SDL_Texture *global, GameState *state,Rana *rana,Difficulty* d, FileManager* f)
@@ -256,9 +324,14 @@ GameScene::GameScene(SDL_Renderer *renderer, SDL_Texture *global, GameState *sta
 	player = rana;
 	difficult = d;
 	oldPuntuation = 0;
-	currentTime = 20;
+	playerTime = 20;
 	initalTime = 20;
 	fileManager = f;
+	playerCurrentTime = new time_t();
+	playerTimeSaved = new time_t();
+	insectTimeSaved = new time_t();
+	insectCurrentTime = new time_t();
+	insectPopUp = true;
 }
 
 GameScene::~GameScene()
@@ -267,166 +340,211 @@ GameScene::~GameScene()
 
 void GameScene::Loop()
 {
+	time(playerTimeSaved);
+	time(insectTimeSaved);
 	try {
 		SDL_Event evnt;
 		for (bool isRunning = true; isRunning;)
 		{
-			//INPUT HANDLER
-			while (SDL_PollEvent(&evnt))
+			if (*gameState == GameState::GAME)
 			{
-				switch (evnt.type)
+				//INPUT HANDLER
+				while (SDL_PollEvent(&evnt) && *gameState == GameState::GAME)
 				{
-				case SDL_QUIT:
-					isRunning = false;
-					*gameState = GameState::QUIT;
-					break;
-				case SDL_KEYDOWN:
-					SDL_Keycode key = evnt.key.keysym.sym;
-
-					switch (key)
+					switch (evnt.type)
 					{
-					case SDLK_ESCAPE:
+					case SDL_QUIT:
 						isRunning = false;
 						*gameState = GameState::QUIT;
 						break;
+					case SDL_KEYDOWN:
+						SDL_Keycode key = evnt.key.keysym.sym;
 
-						//Arrows
-					case SDLK_UP:
-						//Si esta a l'ultim tronc
-						if (player->GetCollision().y == 50)
+						switch (key)
 						{
-							//Comprova si les caselles estan disponibles
-							if (!firstOccupied && player->GetCollision().x >= 20 && player->GetCollision().x <= 55)
-							{
-								//Si esta disponible mou el jugador
-								//Activa la imatge dins la casella
-								//El Coloca al inici
-								player->MoveUp();
-								if (Collision(insect, *player))
-								{
-									player->SumaPuntuacion(200);
-									insectTake = true;
-								}
-								else player->SumaPuntuacion(50);
-								std::cout << player->GetPuntuacion() << endl;
-								firstOccupied = true;
-								player->PosInicial();
-								
-							}
-							else if (!secondOccupied && player->GetCollision().x >= 173 && player->GetCollision().x <= 225)
-							{
-								//Si esta disponible mou el jugador
-								//Activa la imatge dins la casella
-								//El Coloca al inici
-								player->MoveUp();
-								if (Collision(insect, *player))
-								{
-									player->SumaPuntuacion(200);
-									insectTake = true;
-								}
-								else player->SumaPuntuacion(50);
-								cout << player->GetPuntuacion() << endl;
-								secondOccupied = true;
-								player->PosInicial();
-							}
-							else if (!thirdOccupied && player->GetCollision().x >= 350 && player->GetCollision().x <= 400)
-							{
-								//Si esta disponible mou el jugador
-								//Activa la imatge dins la casella
-								//El Coloca al inici
-								player->MoveUp();
-								if (Collision(insect, *player))
-								{
-									player->SumaPuntuacion(200);
-									insectTake = true;
-								}
-								else player->SumaPuntuacion(50);
-								cout << player->GetPuntuacion() << endl;
-								thirdOccupied = true;
-								player->PosInicial();
-							}
-							else if (!fourthOccupied && player->GetCollision().x >= 520 && player->GetCollision().x <= 565)
-							{
-								//Si esta disponible mou el jugador
-								//Activa la imatge dins la casella
-								//El Coloca al inici
-								player->MoveUp();
-								if (Collision(insect, *player))
-								{
-									player->SumaPuntuacion(200);
-									insectTake = true;
-								}
-								else player->SumaPuntuacion(50);
-								cout << player->GetPuntuacion() << endl;
-								fourthOccupied = true;
-								player->PosInicial();
-							}
-							else if (!fifthOccupied && player->GetCollision().x >= 700 && player->GetCollision().x <= 735)
-							{
-								//Si esta disponible mou el jugador
-								//Activa la imatge dins la casella
-								//El Coloca al inici
-								player->MoveUp();
-								if (Collision(insect, *player))
-								{
-									player->SumaPuntuacion(200);
-									insectTake = true;
-								}
-								else player->SumaPuntuacion(50);
-								cout << player->GetPuntuacion() << endl;
-								fifthOccupied = true;
-								player->PosInicial();
-							}
+						case SDLK_ESCAPE:
+							*gameState = GameState::PAUSE;
+							break;
 
-						}
-						//Si no es a l'ultim tronc, abansa normal
-						else
-						{
-							player->MoveUp();
-							if(player->GetCollision().y==200)
+							//Arrows
+						case SDLK_UP:
+							//Si esta a l'ultim tronc
+							if (player->GetCollision().y == 50)
 							{
-								player->SumaPuntuacion(10);
+								//Comprova si les caselles estan disponibles
+								if (!firstOccupied && player->GetCollision().x >= 20 && player->GetCollision().x <= 55)
+								{
+									//Si esta disponible mou el jugador
+									//Activa la imatge dins la casella
+									//El Coloca al inici
+									player->MoveUp();
+									if (Collision(insect, *player))
+									{
+										player->SumaPuntuacion(200);
+										insectTake = true;
+									}
+									else
+									{
+										player->SumaPuntuacion(50);
+										player->SumaPuntuacion(playerTime * 10);
+									}
+									firstOccupied = true;
+									player->PosInicial();
+									playerTime = initalTime;
+
+								}
+								else if (!secondOccupied && player->GetCollision().x >= 173 && player->GetCollision().x <= 225)
+								{
+									//Si esta disponible mou el jugador
+									//Activa la imatge dins la casella
+									//El Coloca al inici
+									player->MoveUp();
+									if (Collision(insect, *player))
+									{
+										player->SumaPuntuacion(200);
+										insectTake = true;
+									}
+									else
+									{
+										player->SumaPuntuacion(50);
+										player->SumaPuntuacion(playerTime * 10);
+									}
+									secondOccupied = true;
+									player->PosInicial();
+									playerTime = initalTime;
+								}
+								else if (!thirdOccupied && player->GetCollision().x >= 350 && player->GetCollision().x <= 400)
+								{
+									//Si esta disponible mou el jugador
+									//Activa la imatge dins la casella
+									//El Coloca al inici
+									player->MoveUp();
+									if (Collision(insect, *player))
+									{
+										player->SumaPuntuacion(200);
+										insectTake = true;
+									}
+									else
+									{
+										player->SumaPuntuacion(50);
+										player->SumaPuntuacion(playerTime * 10);
+									}
+									thirdOccupied = true;
+									player->PosInicial();
+									playerTime = initalTime;
+								}
+								else if (!fourthOccupied && player->GetCollision().x >= 520 && player->GetCollision().x <= 565)
+								{
+									//Si esta disponible mou el jugador
+									//Activa la imatge dins la casella
+									//El Coloca al inici
+									player->MoveUp();
+									if (Collision(insect, *player))
+									{
+										player->SumaPuntuacion(200);
+										insectTake = true;
+									}
+									else
+									{
+										player->SumaPuntuacion(50);
+										player->SumaPuntuacion(playerTime * 10);
+									}
+									fourthOccupied = true;
+									player->PosInicial();
+									playerTime = initalTime;
+								}
+								else if (!fifthOccupied && player->GetCollision().x >= 700 && player->GetCollision().x <= 735)
+								{
+									//Si esta disponible mou el jugador
+									//Activa la imatge dins la casella
+									//El Coloca al inici
+									player->MoveUp();
+									if (Collision(insect, *player))
+									{
+										player->SumaPuntuacion(200);
+										insectTake = true;
+									}
+									else
+									{
+										player->SumaPuntuacion(50);
+										player->SumaPuntuacion(playerTime * 10);
+									}
+									fifthOccupied = true;
+									player->PosInicial();
+									playerTime = initalTime;
+								}
+
 							}
-							cout << player->GetPuntuacion() << endl;
+							//Si no es a l'ultim tronc, abansa normal
+							else
+							{
+								player->MoveUp();
+								if (player->GetCollision().y == 200)
+								{
+									player->SumaPuntuacion(10);
+								}
+							}
+							break;
+						case SDLK_DOWN:
+							player->MoveDown(600);
+							break;
+						case SDLK_LEFT:
+							player->MoveLeft();
+							break;
+						case SDLK_RIGHT:
+							player->MoveRight(800);
+							break;
+						default:
+							break;
 						}
-						break;
-					case SDLK_DOWN:
-						player->MoveDown(600);
-						break;
-					case SDLK_LEFT:
-						player->MoveLeft();
-						break;
-					case SDLK_RIGHT:
-						player->MoveRight(800);
-						break;
-					default:
+					}
+
+				}
+				if (player->GetVidas() == 0)
+				{
+					*gameState = GameState::GAMEOVER;
+					isRunning = false;
+				}
+				else if (firstOccupied && secondOccupied && thirdOccupied
+					&& fourthOccupied && fifthOccupied)
+				{
+					player->SumaPuntuacion(1000);
+					player->PosInicial();
+					if (level < 3)level++;
+
+					//Canviar l'Start per un NextLvl
+					Start();
+				}
+				else
+				{
+					//UPDATE
+					Update();
+
+					//DRAW
+					Draw();
+				}
+			}
+			else if (*gameState == GameState::PAUSE)
+			{
+				while (SDL_PollEvent(&evnt) && *gameState==GameState::PAUSE)
+				{
+					switch (evnt.type)
+					{
+					case SDL_MOUSEBUTTONDOWN:
+
+						if (evnt.button.y >= 150 && evnt.button.y <= 200
+							&& (evnt.button.x >= 300 && evnt.button.x <= 500))
+						{
+							*gameState = GameState::GAME;
+						}
+						else if (evnt.button.y >= 400 && evnt.button.y <= 450
+							&& (evnt.button.x >= 300 && evnt.button.x <= 500))
+							isRunning = false;
+							*gameState = GameState::MENU;
 						break;
 					}
 				}
-
-			}
-			if (player->GetVidas() == 0)
-			{
-				*gameState = GameState::MENU;
-				isRunning = false;
-			}
-			else if (firstOccupied && secondOccupied && thirdOccupied
-				&& fourthOccupied && fifthOccupied)
-			{
-				player->SumaPuntuacion(1000);
-				player->PosInicial();
-				if (level < 3)level++;
-
-				//Canviar l'Start per un NextLvl
-				Start();
-			}
-			else
-			{
-				//UPDATE
-				Update();
-
-				//DRAW
-				Draw();
+				DrawPause();
 			}
 		}
 	}
@@ -452,6 +570,7 @@ void GameScene::Start()
 	car.SetVelocity(fileManager->CarVelocity(*difficult));
 	wood.SetVelocity(fileManager->WoodVelocity(*difficult));
 	initalTime = fileManager->TimePlayer(*difficult);
+	playerTime = initalTime;
 
 	firstOccupied = false;
 	secondOccupied = false;
@@ -477,6 +596,7 @@ void GameScene::Start()
 	//Array de 3 elemetns, ja que son 3 files
 	riverElementsForLine = fileManager->RiverElementsForLine(level);
 	roadElementsForLine = fileManager->RoadElementsForLine(level);
+	roadElementsForLine += (level - 1) % 3;
 
 	riverLinesObjects = new vector<DynamicObject>[3];
 	lastRiverObject = new DynamicObject*[3];

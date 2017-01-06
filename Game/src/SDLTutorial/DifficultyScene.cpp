@@ -79,8 +79,21 @@ void DifficultyScene::Loop()
 void DifficultyScene::Draw()
 {
 	SDL_RenderClear(r);
-	SDL_RenderCopy(r, t, new SDL_Rect{ 0,0,800,50 }, new SDL_Rect{ 0,0,800,100 });
-	SDL_RenderCopy(r, menu, new SDL_Rect{ 0,0,640,480 }, new SDL_Rect{ 0,100,800,600 });
 
+	SDL_RenderCopy(r, t, new SDL_Rect{ 0,0,800,50 }, new SDL_Rect{ 0,0,800,100 });
+
+	string text = "Ease";
+	SDL_Rect textLocation = { 300,210,170,60 };
+	RenderText(text.c_str(), textLocation);
+
+	text = "Medium";
+	textLocation = { 260,350,250,60 };
+	RenderText(text.c_str(), textLocation);
+
+	text = "Hard";
+	textLocation = { 320,510,130,60 };
+	RenderText(text.c_str(), textLocation);
+
+	//Pintem tots elements del renderer
 	SDL_RenderPresent(r);
 }

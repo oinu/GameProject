@@ -21,7 +21,7 @@ public:
 	{
 
 	};
-	Score(int p, char* c)
+	Score(int p, const char* c)
 	{
 		punts = p;
 		for (int i = 0; i < 10; i++)

@@ -40,13 +40,10 @@ public:
 		return trobat;
 	}
 
-	void AddInTop(int num)
+	void AddInTop(int num,const char*name)
 	{
 		Score tmp;
-		Score user;
-		user.punts = num;
-		cout << "Escriu un nom (maxim 10 caracters)" << endl;
-		cin >> user.nom;
+		Score user(num, name);
 		for (int i = 0; i < 10; i++)
 		{
 			if (user.punts >=ranking[i].punts)

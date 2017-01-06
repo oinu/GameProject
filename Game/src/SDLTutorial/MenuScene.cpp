@@ -7,7 +7,6 @@ MenuScene::MenuScene(SDL_Renderer * renderer, SDL_Texture *global, GameState* g,
 	r = renderer;
 	t = global;
 	gameState = g;
-	menu= IMG_LoadTexture(r, "../../res/gfx/options.png");
 	difficult = d;
 }
 
@@ -47,7 +46,8 @@ void MenuScene::Loop()
 				else if (evnt.button.y >= 350 && evnt.button.y <= 410
 					&& evnt.button.x >= 260 && evnt.button.x <= 510)
 				{
-					//cout << "Ranking" << endl;
+					isRunning = false;
+					*gameState = GameState::RANKING;
 				}
 				else if (evnt.button.y >= 510 && evnt.button.y <= 570
 					&& evnt.button.x >= 320 && evnt.button.x <= 450)
@@ -74,8 +74,21 @@ void MenuScene::Loop()
 void MenuScene::Draw()
 {
 	SDL_RenderClear(r);
-	SDL_RenderCopy(r, t, new SDL_Rect{ 0,0,800,50 }, new SDL_Rect{ 0,0,800,100 });
-	SDL_RenderCopy(r, menu, new SDL_Rect{ 0,0,640,480 }, new SDL_Rect{ 0,100,800,600 });
 
+	SDL_RenderCopy(r, t, new SDL_Rect{ 0,0,800,50 }, new SDL_Rect{ 0,0,800,100 });
+
+	string text = "Start";
+	SDL_Rect textLocation = { 300,210,170,60 };
+	RenderText(text.c_str(), textLocation);
+
+	text = "Ranking";
+	textLocation = { 260,350,250,60 };
+	RenderText(text.c_str(), textLocation);
+
+	text = "Exit";
+	textLocation = { 320,510,130,60 };
+	RenderText(text.c_str(), textLocation);
+
+	//Pintem tots elements del renderer
 	SDL_RenderPresent(r);
 }

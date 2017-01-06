@@ -10,6 +10,9 @@ private:
 	MenuScene *menu;
 	DifficultyScene *diff;
 	GameScene *game;
+	GameOverScene *gameOver;
+	RankingScene *rank;
+
 	Difficulty difficult;
 	//Determina en quin moment del joc ens trobem
 	GameState gameState;
