@@ -14,9 +14,17 @@ protected:
 public:
 
 	//CONSTRUCTORS
+
+	//Constructor per defecte
 	Object();
+
+	//Constructor amb enters com a parametres
 	Object(int, int, int, int, int, int);
+
+	//Constructor amb SDL_Rect com a parametres
 	Object( SDL_Rect &, SDL_Rect&);
+
+	//Destuctor
 	~Object();
 
 	//FUCTIONS

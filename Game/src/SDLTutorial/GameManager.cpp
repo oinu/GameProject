@@ -17,7 +17,7 @@ GameManager::GameManager()
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		if (renderer == nullptr)throw SDL_GetError();
 
-		//SPRITES
+		//SPRITE
 		globalTexture = IMG_LoadTexture(renderer, "../../res/gfx/frogger_spritesheet.png");
 		if (globalTexture == nullptr)throw IMG_GetError();
 
@@ -28,11 +28,11 @@ GameManager::GameManager()
 
 		//Game State
 		gameState = GameState::MENU;
-		//difficult = Difficulty::EASE;
 
 		//Recuperar el ranking
 		ranking = new Ranking(fileManager);
 
+		//Inicialitzem els punters
 		menu = new MenuScene(renderer, globalTexture,&gameState,&difficult);
 		game = new GameScene(renderer, globalTexture, &gameState, &player, &difficult,&fileManager);
 		diff = new DifficultyScene(renderer, globalTexture, &gameState, &difficult);
@@ -44,26 +44,36 @@ GameManager::GameManager()
 	}
 }
 
+//Destroy
 GameManager::~GameManager()
 {
 	SDL_DestroyTexture(globalTexture);
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	
 }
 
+//Menu Principal
 void GameManager::MainMenu()
 {
+	//Crida la funcio loop del menu
 	menu->Loop();
 }
 
+//Seleccio de dificultat
 void GameManager::SelectDifficulty()
 {
+	//Crida la funcio loop del menu dificultat
 	diff->Loop();
 }
 
+//Jugar
 void GameManager::Game()
 {
+	//Inicialitza els valors del joc
 	game->Start();
+
+	//Comença a jugar
 	game->Loop();
 }
 
@@ -71,6 +81,7 @@ void GameManager::Game()
 //Tambe mou el personatge
 void GameManager::GameLoop()
 {
+	//Mentre no volguem marxar del joc
 	while (gameState!=GameState::QUIT)
 	{
 		if (gameState == GameState::GAME)Game();

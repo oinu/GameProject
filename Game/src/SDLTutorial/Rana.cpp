@@ -1,7 +1,7 @@
 #include "Rana.h"
 
 
-
+//Constructor per defecte
 Rana::Rana()
 {
 	img = { 0,0,0,0 };
@@ -10,6 +10,7 @@ Rana::Rana()
 	puntuacion = 0;
 }
 
+//Constructor amb SDL_Rect i un int com a parametres
 Rana::Rana( SDL_Rect &r, SDL_Rect &r2, int v)
 {
 	img = r;
@@ -18,6 +19,7 @@ Rana::Rana( SDL_Rect &r, SDL_Rect &r2, int v)
 	puntuacion = 0;
 }
 
+//Constructor amb nombres enters com a parametres
 Rana::Rana(int aX, int aY, int xImg, int yImg, int width, int heigth, int v)
 {
 	collision.x = aX;
@@ -30,8 +32,10 @@ Rana::Rana(int aX, int aY, int xImg, int yImg, int width, int heigth, int v)
 	puntuacion = 0;
 }
 
+//Destructor
 Rana::~Rana()
 {
+	//Es buit ja que no utilitzem punters.
 }
 
 //Retorna del nombre de vides.
@@ -100,6 +104,7 @@ void Rana::SumaPuntuacion(int value)
 	puntuacion += value;
 }
 
+//Torna a la granota el punt de partida
 void Rana::PosInicial()
 {
 	collision = { 800 / 2 - 50,600 - 100,50,50 };

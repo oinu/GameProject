@@ -48,13 +48,10 @@
       <Filter>SceneObjects</Filter>
     </ClCompile>
     <ClCompile Include="RankingScene.cpp">
-      <Filter>Game</Filter>
+      <Filter>SceneObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Render.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
@@ -95,7 +92,7 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="RankingScene.h">
-      <Filter>Managers</Filter>
+      <Filter>SceneObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

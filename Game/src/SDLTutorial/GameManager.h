@@ -1,19 +1,32 @@
 #pragma once
 #include "Utilities.h"
 
+//Definim el width i el height de la finestre
 #define WIDTH 800 
 #define HEIGTH 600
 
 class GameManager
 {
 private:
+	
+	//Punter que conter el Menu Principal
 	MenuScene *menu;
+
+	//Punter que conter el menu Dificultat
 	DifficultyScene *diff;
+
+	//Punter que conter el joc.
 	GameScene *game;
+
+	//Punter que conter el menu GamerOver
 	GameOverScene *gameOver;
+
+	//Punter que conter el menu Ranking
 	RankingScene *rank;
 
+	//Determina la dificultat.
 	Difficulty difficult;
+
 	//Determina en quin moment del joc ens trobem
 	GameState gameState;
 	//Punter que conter la informacio de la finestra
@@ -28,16 +41,20 @@ private:
 	//La textura on es troba totes les imatges
 	SDL_Texture* globalTexture;
 
+	//Variable que conter el FileManager
 	FileManager fileManager;
 
+	//Punter que conte el ranking
 	Ranking *ranking;
 
 public:
 
 	//CONSTRUCTORS
 
-	//Inicialitza tots els valors
+	//Constructor per defecte
 	GameManager();
+
+	//Destructor
 	~GameManager();
 	
 	//FUNCIONS
@@ -45,6 +62,7 @@ public:
 	//Menu Principal
 	void MainMenu();
 
+	//Seleccio de dificultat
 	void SelectDifficulty();
 
 	//Jugar

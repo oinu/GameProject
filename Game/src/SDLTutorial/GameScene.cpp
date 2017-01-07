@@ -539,8 +539,10 @@ void GameScene::Loop()
 						}
 						else if (evnt.button.y >= 400 && evnt.button.y <= 450
 							&& (evnt.button.x >= 300 && evnt.button.x <= 500))
+						{
 							isRunning = false;
 							*gameState = GameState::MENU;
+						}
 						break;
 					}
 				}

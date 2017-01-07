@@ -2,6 +2,8 @@
 #include "Object.h"
 class Rana : public Object
 {
+	//S'HA BARREJAT ELS IDIOMES
+	//NO S'HA DE FER
 private:
 	//guarda les vides del jugador
 	int vidas;
@@ -10,9 +12,17 @@ private:
 	int puntuacion;
 public:
 	//CONSTRUCTORS
+
+	//Constructor per defecte
 	Rana();
+
+	//Constructor amb SDL_Rect i un int com a parametres
 	Rana(SDL_Rect&, SDL_Rect &, int);
+
+	//Constructor amb nombres enters com a parametres
 	Rana(int, int, int, int, int, int, int);
+
+	//Destructor
 	~Rana();
 
 	//FUNCTIONS
@@ -49,6 +59,7 @@ public:
 	//Suma el valor a la puntuacio del jugador.
 	void SumaPuntuacion(int);
 
+	//Torna a la granota el punt de partida
 	void PosInicial();
 };
 

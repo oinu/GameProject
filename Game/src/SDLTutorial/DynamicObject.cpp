@@ -1,9 +1,11 @@
 #include "DynamicObject.h"
 
+//Constructor per defecte buit
 DynamicObject::DynamicObject()
 {
 }
 
+//Constructor amb valors enters i booleans
 DynamicObject::DynamicObject(int xPos, int yPos, int width, int height, int xImage, int yImage, int widthImage, int heightImage,bool direction)
 {
 	reves = direction;
@@ -12,6 +14,7 @@ DynamicObject::DynamicObject(int xPos, int yPos, int width, int height, int xIma
 	v = 1;
 }
 
+//Constructor amb valors SDL_Rect& i la booleana
 DynamicObject::DynamicObject(SDL_Rect &i, SDL_Rect &c, bool direction)
 {
 	collision = c;
@@ -20,9 +23,11 @@ DynamicObject::DynamicObject(SDL_Rect &i, SDL_Rect &c, bool direction)
 	v = 1;
 }
 
-
+//Destructor
 DynamicObject::~DynamicObject()
 {
+	//Es buit ja que no te cap punter
+	//I no es necessari borrar res.
 }
 
 //Retorna la direccio
@@ -37,11 +42,13 @@ int DynamicObject::GetVelociti()
 	return v;
 }
 
+//Retorna la distancia que volem deixar
 int DynamicObject::GetDistance()
 {
 	return distance;
 }
 
+//Li dona valor a la distancia
 void DynamicObject::SetDistance(int value)
 {
 	distance = value;
@@ -102,6 +109,8 @@ void DynamicObject::Update(DynamicObject* obj)
 	}
 }
 
+//Actualitzem la velocitat segons la puntuacio
+//Amb la formula donada en el document.
 void DynamicObject::UpdateVelocity(int score)
 {
 	v += score / 1000;

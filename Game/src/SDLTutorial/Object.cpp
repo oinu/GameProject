@@ -1,13 +1,14 @@
 #include "Object.h"
 
 
-
+//Constructor per defecte
 Object::Object()
 {
 	img = { 0,0,0,0 };
 	collision = { 0,0,0,0 };
 }
 
+//Constructor amb enters com a parametres
 Object::Object(int aX, int aY, int xImage, int yImage, int aWidth, int aHeight)
 {
 	collision.x = aX;
@@ -15,14 +16,17 @@ Object::Object(int aX, int aY, int xImage, int yImage, int aWidth, int aHeight)
 	img = { xImage,yImage,aWidth,aHeight };
 }
 
+//Constructor amb SDL_Rect com a parametres
 Object::Object( SDL_Rect & aImg, SDL_Rect &aCollision)
 {
 	img = aImg;
 	collision = aCollision;
 }
 
+//Destuctor
 Object::~Object()
 {
+	//No destruim res, ja que no em utilitzat cap punter
 }
 
 //Retorna el valor de X
