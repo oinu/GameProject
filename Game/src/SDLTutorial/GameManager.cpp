@@ -5,21 +5,6 @@
 GameManager::GameManager()
 {
 	try {
-		//INIT
-		if (SDL_Init(SDL_INIT_EVERYTHING) != 0) throw SDL_GetError();
-		const Uint8 imgFlags = IMG_INIT_PNG | IMG_INIT_JPG;
-		if (!(IMG_Init(imgFlags) &imgFlags)) throw IMG_GetError();
-
-		//WINDOW
-		window = SDL_CreateWindow("FROGGER", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGTH, SDL_WINDOW_BORDERLESS | SDL_WINDOW_SHOWN);
-
-		//RENDERER
-		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-		if (renderer == nullptr)throw SDL_GetError();
-
-		//SPRITE
-		globalTexture = IMG_LoadTexture(renderer, "../../res/gfx/frogger_spritesheet.png");
-		if (globalTexture == nullptr)throw IMG_GetError();
 
 		//Player
 		SDL_Rect froggImg = { 10,360,25,25 };
@@ -33,11 +18,11 @@ GameManager::GameManager()
 		ranking = new Ranking(fileManager);
 
 		//Inicialitzem els punters
-		menu = new MenuScene(renderer, globalTexture,&gameState,&difficult);
-		game = new GameScene(renderer, globalTexture, &gameState, &player, &difficult,&fileManager);
-		diff = new DifficultyScene(renderer, globalTexture, &gameState, &difficult);
-		gameOver= new GameOverScene(renderer, &gameState, &difficult);
-		rank = new RankingScene(renderer, &gameState, ranking,&player);
+		menu = new MenuScene(&renderer,&gameState,&difficult);
+		game = new GameScene(&renderer, &gameState, &player, &difficult,&fileManager);
+		diff = new DifficultyScene(&renderer, &gameState, &difficult);
+		gameOver= new GameOverScene(&renderer, &gameState, &difficult);
+		rank = new RankingScene(&renderer, &gameState, ranking,&player);
 	}
 	catch (const char *msg) {
 		SDL_LogError(SDL_LOG_CATEGORY_ERROR, "%s", msg);
@@ -46,11 +31,7 @@ GameManager::GameManager()
 
 //Destroy
 GameManager::~GameManager()
-{
-	SDL_DestroyTexture(globalTexture);
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	
+{	
 }
 
 //Menu Principal

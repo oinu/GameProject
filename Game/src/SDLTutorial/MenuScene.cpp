@@ -3,10 +3,9 @@
 
 //Constructor amb parametres, que son punters
 //SDL_Renderer,SDL_Texture,GameState,Difficulty.
-MenuScene::MenuScene(SDL_Renderer * renderer, SDL_Texture *global, GameState* g, Difficulty* d)
+MenuScene::MenuScene(Renderer * renderer, GameState* g, Difficulty* d)
 {
 	r = renderer;
-	t = global;
 	gameState = g;
 	difficult = d;
 }
@@ -15,10 +14,8 @@ MenuScene::MenuScene(SDL_Renderer * renderer, SDL_Texture *global, GameState* g,
 MenuScene::~MenuScene()
 {
 	r = nullptr;
-	t = nullptr;
 	gameState = nullptr;
 	
-	delete t;
 	delete r;
 	delete gameState;
 }
@@ -102,10 +99,10 @@ void MenuScene::Loop()
 void MenuScene::Draw()
 {
 	//"Netejem el renderer"
-	SDL_RenderClear(r);
+	r->Clear();
 
-	//Afegim el titul
-	SDL_RenderCopy(r, t, new SDL_Rect{ 0,0,800,50 }, new SDL_Rect{ 0,0,800,100 });
+	//Afegim el titol
+	r->DrawImage(new SDL_Rect{ 0,0,800,100 }, new SDL_Rect{ 0,0,800,50 });
 
 	//Declarem la variable text i 
 	//l'inicialitzem amb el contingut Start.
@@ -115,7 +112,7 @@ void MenuScene::Draw()
 	SDL_Rect textLocation = { 300,210,170,60 };
 
 	//L'introduim dintre el renderer.
-	RenderText(text.c_str(), textLocation);
+	r->DrawText(text.c_str(), textLocation);
 
 	//Donem el valor a la variable text i 
 	//l'inicialitzem amb el contingut Ranking.
@@ -123,9 +120,9 @@ void MenuScene::Draw()
 
 	//Donem el valor la variable textLocation i l'inicialitzem.
 	textLocation = { 260,350,250,60 };
-
+	
 	//L'introduim dintre el renderer.
-	RenderText(text.c_str(), textLocation);
+	r->DrawText(text.c_str(), textLocation);
 
 	//Donem el valor a la variable text i 
 	//l'inicialitzem amb el contingut Exit.
@@ -133,10 +130,10 @@ void MenuScene::Draw()
 
 	//Donem el valor la variable textLocation i l'inicialitzem.
 	textLocation = { 320,510,130,60 };
-
+	
 	//L'introduim dintre el renderer.
-	RenderText(text.c_str(), textLocation);
+	r->DrawText(text.c_str(), textLocation);
 
 	//Pintem tots elements del renderer
-	SDL_RenderPresent(r);
+	r->RenderPresent();
 }

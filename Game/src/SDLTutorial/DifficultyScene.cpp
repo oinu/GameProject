@@ -3,12 +3,11 @@
 
 //Constructor que te com a parametres punters
 //De tipus SDL_Renderer, SDL_Texture, GameState i Difficulty
-DifficultyScene::DifficultyScene(SDL_Renderer * renderer, SDL_Texture *global, GameState* g, Difficulty* d)
+DifficultyScene::DifficultyScene(Renderer * renderer, GameState* g, Difficulty* d)
 {
 	//Els passem com a punteres amb la finalitat
 	//de poder modificar el contingut des d'aquesta classe
 	r = renderer;
-	t = global;
 	gameState = g;
 	difficult = d;
 }
@@ -16,13 +15,7 @@ DifficultyScene::DifficultyScene(SDL_Renderer * renderer, SDL_Texture *global, G
 //Destructor
 DifficultyScene::~DifficultyScene()
 {
-	//Els poso com a null pointer aixi
-	//evitem que esborri el contingut dels punters
-	r = nullptr;
-	t = nullptr;
 	gameState = nullptr;
-
-	delete t;
 	delete r;
 	delete gameState;
 }
@@ -110,13 +103,37 @@ void DifficultyScene::Loop()
 void DifficultyScene::Draw()
 {
 	//"Neteja el buffer" del render
+	r->Clear();
+
+	//Afegeix el titul del frogger.
+	r->DrawImage( new SDL_Rect{ 0,0,800,100 }, new SDL_Rect{ 0,0,800,50 });
+
+	//Afegeix el text Easy
+	string text = "Easy";
+	SDL_Rect textLocation = { 300,210,170,60 };
+	r->DrawText(text.c_str(), textLocation);
+
+	//Afegeix el text Medium
+	text = "Medium";
+	textLocation = { 260,350,250,60 };
+	r->DrawText(text.c_str(), textLocation);
+
+	//Afegeix el text Hard
+	text = "Hard";
+	textLocation = { 320,510,130,60 };
+	r->DrawText(text.c_str(), textLocation);
+
+	//Pintem tots elements del renderer
+	r->RenderPresent();
+
+	/*//"Neteja el buffer" del render
 	SDL_RenderClear(r);
 
 	//Afegeix el titul del frogger.
 	SDL_RenderCopy(r, t, new SDL_Rect{ 0,0,800,50 }, new SDL_Rect{ 0,0,800,100 });
 
-	//Afegeix el text Ease
-	string text = "Ease";
+	//Afegeix el text Easy
+	string text = "Easy";
 	SDL_Rect textLocation = { 300,210,170,60 };
 	RenderText(text.c_str(), textLocation);
 
@@ -131,5 +148,5 @@ void DifficultyScene::Draw()
 	RenderText(text.c_str(), textLocation);
 
 	//Pintem tots elements del renderer
-	SDL_RenderPresent(r);
+	SDL_RenderPresent(r);*/
 }

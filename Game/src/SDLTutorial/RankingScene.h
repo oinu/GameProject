@@ -27,7 +27,7 @@ public:
 
 	//Constructor amb parametres pointer
 	//SDL_Renderer, GameState, Ranking, Rana
-	RankingScene(SDL_Renderer *, GameState*,Ranking*,Rana*);
+	RankingScene(Renderer*, GameState*,Ranking*,Rana*);
 
 	//Destructor
 	~RankingScene();

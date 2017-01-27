@@ -5,7 +5,42 @@
 void RankingScene::Draw()
 {
 	//"Netejem el renderer"
-	SDL_RenderClear(r);
+	r->Clear();
+
+	//Declarem la variable text i textLocation.
+	string text;
+	SDL_Rect textLocation;
+
+	//Per cada element del ranking.
+	for (int i = 0; i < 10; i++)
+	{
+		//Guardem la posicio, el nom i
+		//l'score dintre l'string
+		text = to_string(i + 1);
+		text += ".- ";
+		text += ranking->GetScoreByIndex(i).nom;
+		text += "  ";
+		text += to_string(ranking->GetScoreByIndex(i).punts);
+
+		//Donem valor al SDL_Rect.
+		textLocation = { 260,10 + (50 * i),250,40 };
+
+		//L'introduim dintre el renderer.
+		r->DrawText(text.c_str(), textLocation);
+	}
+
+	//Guardem el text "Press ENTER to continue"
+	// a la variable text.
+	text = "Press ENTER to continue";
+
+	//Donem valor al SDL_Rect.
+	textLocation = { 230,530,280,40 };
+
+	//L'introduim dintre el renderer.
+	r->DrawText(text.c_str(), textLocation);
+	r->RenderPresent();
+
+	/*SDL_RenderClear(r);
 
 	//Declarem la variable text i textLocation.
 	string text;
@@ -40,7 +75,7 @@ void RankingScene::Draw()
 	RenderText(text.c_str(), textLocation);
 
 	//Pintem tots elements del renderer
-	SDL_RenderPresent(r);
+	SDL_RenderPresent(r);*/
 }
 
 //Retorne el caracter de la tecla apretada
@@ -67,10 +102,9 @@ char RankingScene::ObtenirNom(SDL_Keycode k)
 
 //Constructor amb parametres pointer
 //SDL_Renderer, GameState, Ranking, Rana
-RankingScene::RankingScene(SDL_Renderer * renderer, GameState* g, Ranking* ran,Rana *p)
+RankingScene::RankingScene(Renderer * renderer, GameState* g, Ranking* ran,Rana *p)
 {
 	r = renderer;
-	t = nullptr;
 	gameState = g;
 	difficult = nullptr;
 	ranking = ran;

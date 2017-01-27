@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL\SDL.h>
+#include "Renderer.h"
 
 //Se utilizara para los vehiculos, troncos e insectos
 class Object
@@ -57,6 +58,6 @@ public:
 	void Update();
 
 	//Pinta els objectes
-	void Draw(SDL_Renderer*, SDL_Texture*);
+	void Draw(Renderer*);
 };
 

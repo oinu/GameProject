@@ -5,6 +5,17 @@
 void GameOverScene::Draw()
 {
 	//"Netejem el buffer" del renderer.
+	r->Clear();
+
+	//Pintem el text Game Over.
+	string text = "Game Over";
+	SDL_Rect textLocation = { 260,350,250,60 };
+	r->DrawText(text.c_str(), textLocation);
+
+	//Renderitzem el buffer.
+	r->RenderPresent();
+
+	/*//"Netejem el buffer" del renderer.
 	SDL_RenderClear(r);
 
 	//Pintem el text Game Over.
@@ -13,17 +24,16 @@ void GameOverScene::Draw()
 	RenderText(text.c_str(), textLocation);
 
 	//Renderitzem el buffer.
-	SDL_RenderPresent(r);	
+	SDL_RenderPresent(r);	*/
 }
 
 //Constructor que te punters com a parametres
 // de tipus SDL_Renderer, GameState, Difficulty
-GameOverScene::GameOverScene(SDL_Renderer * renderer, GameState* g, Difficulty* d)
+GameOverScene::GameOverScene(Renderer * renderer, GameState* g, Difficulty* d)
 {
 	//Els punters que no fem servir, por que son de
 	//la classe pare el apuntem a null.
 	r = renderer;
-	t = nullptr;
 	gameState = g;
 	difficult = d;
 	

@@ -169,6 +169,7 @@
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="RankingScene.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Object.h" />

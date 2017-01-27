@@ -30,16 +30,18 @@ private:
 	//Determina en quin moment del joc ens trobem
 	GameState gameState;
 	//Punter que conter la informacio de la finestra
-	SDL_Window *window;
+	//SDL_Window *window;
 
 	//Punter que conter el renderer
-	SDL_Renderer *renderer;
+	//SDL_Renderer *renderer;
+
+	Renderer renderer;
 
 	//Jugador
 	Rana player;
 
 	//La textura on es troba totes les imatges
-	SDL_Texture* globalTexture;
+	//SDL_Texture* globalTexture;
 
 	//Variable que conter el FileManager
 	FileManager fileManager;

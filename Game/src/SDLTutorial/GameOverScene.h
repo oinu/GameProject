@@ -19,7 +19,7 @@ public:
 
 	//Constructor que te punters com a parametres
 	// de tipus SDL_Renderer, GameState, Difficulty
-	GameOverScene(SDL_Renderer *, GameState*, Difficulty*);
+	GameOverScene(Renderer *, GameState*, Difficulty*);
 
 	//Destuctor
 	~GameOverScene();

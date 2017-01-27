@@ -1,10 +1,6 @@
 ﻿  Scene.cpp
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(6): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\scene.cpp(28): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
-  d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(122): note: see declaration of 'SDL_Renderer'
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\scene.cpp(29): warning C4150: deletion of pointer to incomplete type 'SDL_Texture'; no destructor called
-  d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(128): note: see declaration of 'SDL_Texture'
   RankingScene.cpp
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(6): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
@@ -13,10 +9,6 @@ d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(
   MenuScene.cpp
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(6): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\menuscene.cpp(21): warning C4150: deletion of pointer to incomplete type 'SDL_Texture'; no destructor called
-  d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(128): note: see declaration of 'SDL_Texture'
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\menuscene.cpp(22): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
-  d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(122): note: see declaration of 'SDL_Renderer'
   Main.cpp
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(6): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
@@ -40,10 +32,6 @@ d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\filemanager.h(
   DifficultyScene.cpp
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(3): warning C4091: 'typedef ': ignored on left of 'GameState' when no variable is declared
 d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\enumerators.h(6): warning C4091: 'typedef ': ignored on left of 'Difficulty' when no variable is declared
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\difficultyscene.cpp(25): warning C4150: deletion of pointer to incomplete type 'SDL_Texture'; no destructor called
-  d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(128): note: see declaration of 'SDL_Texture'
-d:\enti\3r\tecnologiaprogramacio\gameproject\game\src\sdltutorial\difficultyscene.cpp(26): warning C4150: deletion of pointer to incomplete type 'SDL_Renderer'; no destructor called
-  d:\enti\3r\tecnologiaprogramacio\gameproject\game\dep\inc\sdl\sdl_render.h(122): note: see declaration of 'SDL_Renderer'
   Generating Code...
   SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.exe
   SDLTutorial.vcxproj -> D:\Enti\3r\TecnologiaProgramacio\GameProject\Game\\bin\Win32Debug\SDLTutorial.pdb (Full PDB)

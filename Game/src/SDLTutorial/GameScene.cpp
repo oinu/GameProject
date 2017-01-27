@@ -73,14 +73,14 @@ bool GameScene::Collision(Object & d, Rana & r)
 void GameScene::Draw()
 {
 	//Netegem el que es mostra per pantalla
-	SDL_RenderClear(r);
+	r->Clear();
 
 	//Per cada element de l'escena
 	for (auto obj : sceneObject)
 	{
 		//Pintem
 		//SDL_RenderCopy(renderer, globalTexture, &obj.GetImgBox(), &obj.GetCollision());
-		obj.Draw(r, t);
+		obj.Draw(r);
 	}
 
 	//Recorrem les llistes
@@ -91,7 +91,7 @@ void GameScene::Draw()
 		{
 			//El coloquem al renderer
 			//SDL_RenderCopy(renderer, globalTexture, &obj.GetImgBox(), &obj.GetCollision());
-			obj.Draw(r, t);
+			obj.Draw(r);
 		}
 	}
 
@@ -102,57 +102,57 @@ void GameScene::Draw()
 		{
 			//El coloquem al renderer
 			//SDL_RenderCopy(renderer, globalTexture, &obj.GetImgBox(), &obj.GetCollision());
-			obj.Draw(r, t);
+			obj.Draw(r);
 		}
 	}
 
 	//Pintem el player
-	player->Draw(r, t);
+	player->Draw(r);
 
 	//Si l'insecte es a l'escenari el pintem.
-	if(!insectTake)insect.Draw(r, t);
+	if (!insectTake)insect.Draw(r);
 
 	//Si una o varies de les caselles finals estan ocupades,
 	//Pintem una granota el seu lloc.
-	if (firstOccupied)SDL_RenderCopy(r, t, &player->GetImgBox(), new SDL_Rect{ 30,0,player->GetCollision().w,player->GetCollision().h });
-	if (secondOccupied)SDL_RenderCopy(r, t, &player->GetImgBox(), new SDL_Rect{ 200,0,player->GetCollision().w,player->GetCollision().h });
-	if (thirdOccupied)SDL_RenderCopy(r, t, &player->GetImgBox(), new SDL_Rect{ 370,0,player->GetCollision().w,player->GetCollision().h });
-	if (fourthOccupied)SDL_RenderCopy(r, t, &player->GetImgBox(), new SDL_Rect{ 540,0,player->GetCollision().w,player->GetCollision().h });
-	if (fifthOccupied)SDL_RenderCopy(r, t, &player->GetImgBox(), new SDL_Rect{ 710,0,player->GetCollision().w,player->GetCollision().h });
+	if (firstOccupied)r->DrawImage(new SDL_Rect{ 30,0,player->GetCollision().w,player->GetCollision().h }, &player->GetImgBox());
+	if (secondOccupied)r->DrawImage(new SDL_Rect{ 200,0,player->GetCollision().w,player->GetCollision().h }, &player->GetImgBox());
+	if (thirdOccupied)r->DrawImage(new SDL_Rect{ 370,0,player->GetCollision().w,player->GetCollision().h }, &player->GetImgBox());
+	if (fourthOccupied)r->DrawImage(new SDL_Rect{ 540,0,player->GetCollision().w,player->GetCollision().h }, &player->GetImgBox());
+	if (fifthOccupied)r->DrawImage(new SDL_Rect{ 710,0,player->GetCollision().w,player->GetCollision().h }, &player->GetImgBox());
 
 	//Pintem les vides, l'score i el temps que li queda
 	//al jugador.
 	string text = "Lives: ";
 	text += to_string(player->GetVidas());
-	text +=" Score: ";
+	text += " Score: ";
 	text += to_string(player->GetPuntuacion());
 	text += " Time: ";
 	text += to_string(playerTime);
 	SDL_Rect textLocation = { 0,550,250,25 };
-	RenderText(text.c_str(), textLocation);
+	r->DrawText(text.c_str(), textLocation);
 
 	//Pintem tots elements del renderer
-	SDL_RenderPresent(r);
+	r->RenderPresent();
 }
 
 //Pintem el menu pausa
 void GameScene::DrawPause()
 {
 	//"Netejem el renderer"
-	SDL_RenderClear(r);
-	
+	r->Clear();
+
 	//Pintem el Resume text.
 	string text = "Resume";
 	SDL_Rect textLocation = { 300,150,200,50 };
-	RenderText(text.c_str(), textLocation);
+	r->DrawText(text.c_str(), textLocation);
 
 	//Pintem l'Exit text.
 	text = "Exit";
 	textLocation = { 350,400,100,50 };
-	RenderText(text.c_str(), textLocation);
+	r->DrawText(text.c_str(), textLocation);
 
 	//Pintem tots elements del renderer
-	SDL_RenderPresent(r);
+	r->RenderPresent();
 }
 
 //Actualitzem els valors i comprovem colisions.
@@ -430,10 +430,9 @@ void GameScene::DecreaseTime()
 
 //Constructor amb parametres, que son punters de tipus,
 //SDL_Renderer,SDL_Texture,GameState,Rana,Difficulty i FilManager.
-GameScene::GameScene(SDL_Renderer *renderer, SDL_Texture *global, GameState *state,Rana *rana,Difficulty* d, FileManager* f)
+GameScene::GameScene(Renderer *renderer, GameState *state,Rana *rana,Difficulty* d, FileManager* f)
 {
 	r = renderer;
-	t = global;
 	gameState = state;
 	level = 1;
 	player = rana;

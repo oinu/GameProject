@@ -94,5 +94,8 @@
     <ClInclude Include="RankingScene.h">
       <Filter>SceneObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

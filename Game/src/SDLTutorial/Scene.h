@@ -4,18 +4,15 @@
 #include <SDL\SDL_ttf.h>
 #include "Enumerators.h"
 #include <iostream>
+#include "Renderer.h"
 using namespace std;
 class Scene
 {
 	//Indiquem que es protected perque
 	//els fills puguin accedir els atributs.
 protected:
-
 	//Declaracio del punter r, que contindra el renderer
-	SDL_Renderer *r;
-
-	//Declaracio del punter t, que contidra la textura
-	SDL_Texture *t;
+	Renderer *r;
 
 	//Declaracio del punter gameState, que contindra
 	//l'estat del joc.
@@ -29,9 +26,6 @@ protected:
 	//s'ha de sobreescriure.
 	virtual void Draw();
 
-	//Metode que hereten els fills per pintar text.
-	void RenderText(const char* s,SDL_Rect);
-
 public:
 	//CONSTRUCTORS
 
@@ -40,7 +34,7 @@ public:
 
 	//Constructor amb parametres, que son punters
 	// a SDL_Renderer, SDL_Texture,GameStat i Difficulty
-	Scene(SDL_Renderer *, SDL_Texture *,GameState*, Difficulty*);
+	Scene(Renderer*,GameState*, Difficulty*);
 
 	//Destuctors
 	~Scene();

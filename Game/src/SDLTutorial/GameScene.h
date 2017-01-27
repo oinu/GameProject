@@ -137,8 +137,8 @@ public:
 	//CONSTRUCTORS
 
 	//Constructor amb parametres, que son punters de tipus,
-	//SDL_Renderer,SDL_Texture,GameState,Rana,Difficulty i FilManager
-	GameScene(SDL_Renderer *, SDL_Texture *, GameState*,Rana *,Difficulty*,FileManager*);
+	//Renderer,GameState,Rana,Difficulty i FilManager
+	GameScene(Renderer *, GameState*,Rana *,Difficulty*,FileManager*);
 
 	//Destructor
 	~GameScene();
